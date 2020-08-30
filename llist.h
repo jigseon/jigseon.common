@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-namespace igo_library
+namespace jigseon
 {
 
     template <class T>
