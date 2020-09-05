@@ -62,8 +62,11 @@ llist<T>::llist(_In_ const llist<T>& cls) // 복사 생성자
 
 	while (nullptr != temp)
 	{
-
+		this->InsertTail(temp->_data);
+		temp = temp->_next;
 	}
+
+	this->_nr_llist_nodes = cls._nr_llist_nodes;
 }
 
 ///	@brief
