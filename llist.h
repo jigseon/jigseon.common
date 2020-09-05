@@ -1,9 +1,10 @@
 #pragma once
 #include "ExceptionClass.h"
+#include "Heap.h"
 #include <iostream>
 #include <string>
 
-namespace jigseon
+namespace igo_library
 {
 
     template <class T>
@@ -52,7 +53,7 @@ namespace jigseon
         ~llist();
 
         T& operator[] (int);
-        class iterator // llist::iteraor ëŠ” static ì°¸ì¡°
+        class iterator // llist::iteraor ´Â static ÂüÁ¶
         {
         private:
             llist_node<T>* currentP;
@@ -65,12 +66,12 @@ namespace jigseon
             void operator++(int none) { currentP = (direction == forward) ? currentP->next : currentP->prev;; }
             void operator--() { currentP = (direction == forward) ? currentP->prev : currentP->next; }
             void operator--(int none) { currentP = (direction == forward) ? currentP->prev : currentP->next; }
-            bool operator==(iterator i) { return (this->currentP == i.currentP) ? true : false; } // iterator &i ë¡œ ë°›ì„ ê²½ìš° begin()ì—ì„œ ë‚˜ì˜¨ iteratorê°€  
+            bool operator==(iterator i) { return (this->currentP == i.currentP) ? true : false; } // iterator &i ·Î ¹ŞÀ» °æ¿ì begin()¿¡¼­ ³ª¿Â iterator°¡  
             bool operator!=(iterator i) { return (this->currentP != i.currentP) ? true : false; }
             llist_node<T>& operator*() { return *currentP; }
             llist_node<T>* operator->() { return currentP; }
 
-            /* ->ë¥¼ ì˜¤ë²„ë¡œë”©í•˜ë©´ x->f() ëŠ” ë‹¤ìŒê³¼ ê°™ì´ í•´ì„ëœë‹¤
+            /* ->¸¦ ¿À¹ö·ÎµùÇÏ¸é x->f() ´Â ´ÙÀ½°ú °°ÀÌ ÇØ¼®µÈ´Ù
             (x.operator->())->f().
             */
         };
@@ -113,7 +114,7 @@ namespace jigseon
     }
 
     template <class T>
-    llist<T>::llist(const llist<T>& l) // ë³µì‚¬ìƒì„±ì
+    llist<T>::llist(const llist<T>& l) // º¹»ç»ı¼ºÀÚ
     {
         llist_node<T>* temp = l.GetHead();
 
@@ -156,7 +157,7 @@ namespace jigseon
     template <class T>
     bool llist<T>::InsertTail(T data)
     {
-        if (tail == NULL)
+        if (tail == NULL) // list°¡ empty
         {
             tail = new llist_node<T>(data);
             if (tail == NULL) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
@@ -166,7 +167,7 @@ namespace jigseon
         }
         else
         {
-            llist_node<T>* temp = tail;
+            llist_node<T>* temp = this->tail;
             tail = new llist_node<T>(data);
             if (tail == NULL) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
             tail->prev = temp;
@@ -197,7 +198,7 @@ namespace jigseon
         {
             for (int i = 1; i <= index - 1; i++)
             {
-                if (temp->next == NULL) // ëª©í‘œì— ë„ë‹¬í•˜ì§€ ëª»í•˜ì˜€ëŠ”ë° ë„ì´ë¼ë©´..
+                if (temp->next == NULL) // ¸ñÇ¥¿¡ µµ´ŞÇÏÁö ¸øÇÏ¿´´Âµ¥ ³ÎÀÌ¶ó¸é..
                 {
                     InsertTail(data);
                     return true;
@@ -262,9 +263,9 @@ namespace jigseon
             return false;
         if (tail == head)
         {
-            tail = NULL;
             head = NULL;
             delete tail;
+            tail = NULL;
             return true;
         }
 
@@ -299,7 +300,7 @@ namespace jigseon
             for (int i = 1; i <= index; i++)
             {
                 temp = temp->next;
-                if (temp->next == NULL) // ëª©í‘œì— ë„ë‹¬í•˜ì§€ ëª»í•˜ì˜€ëŠ”ë° ë„ì´ë¼ë©´..
+                if (temp->next == NULL) // ¸ñÇ¥¿¡ µµ´ŞÇÏÁö ¸øÇÏ¿´´Âµ¥ ³ÎÀÌ¶ó¸é..
                 {
                     DeleteTail();
                     return true;
@@ -382,13 +383,29 @@ namespace jigseon
     template <class T>
     void llist<T>::reverse()
     {
-
+        Heap<T> maxheap(this->nr_llist_nodes, maximum);
+        for (auto it = this->begin(); it != this->end(); it++)
+        {
+            maxheap.enqueue(it->data, it->data);
+        }
+        for (auto it = this->begin(); it != this->end(); it++)
+        {
+            it->data = maxheap.dequeue().data;
+        }
     }
 
     template <class T>
     void llist<T>::sort()
     {
-
+        Heap<T> minheap(this->nr_llist_nodes, minimum);
+        for (auto it = this->begin();it!=this->end();it++)
+        {
+            minheap.enqueue(it->data, it->data);
+        }
+        for (auto it = this->begin(); it != this->end(); it++)
+        {
+            it->data = minheap.dequeue().data;
+        }
     }
 
 }
