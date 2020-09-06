@@ -1,8 +1,9 @@
 #pragma once
 
 #include <sal.h>
+#include <Windows.h>
 
-#include "jegseion/Src/ExceptionClass.h"
+#include "jigseon/ExceptionClass.h"
 
 template <class T>
 class llist_node
@@ -12,7 +13,7 @@ public:
 	llist_node(_In_ const T& cls);
 	virtual ~llist_node();
 
-private:
+public:
 	T _data;
 	llist_node<T>* _next;
 	llist_node<T>* _prev;
@@ -36,9 +37,10 @@ public:
 	bool DeleteHead();
 	bool DeleteTail();
 	bool DeleteAt(_In_ uint32_t index);
+	void clear() { while (this->DeleteHead()); }
 
-	llist_node<T> GetHead();
-	llist_node<T> GetTail();
+	llist_node<T>* GetHead();
+	llist_node<T>* GetTail();
 
 	T& operator[] (int);
 	class iterator // llist::iterator ´Â  static ÂüÁ¶
@@ -49,11 +51,19 @@ public:
 		iterator(llist_node<T>* current, bool direction = forward) { _current = current; _direction = direction; }
 
 		void operator++() { _current = (_direction == forward) ? _current->_next : _current->_prev; }
-		void operator++(int none) { _current = (_direction == forward) ? _current->_next : _current->_prev; }
+		void operator++(int none)
+		{
+			UNREFERENCED_PARAMETER(none);
+			_current = (_direction == forward) ? _current->_next : _current->_prev; 
+		}
 		void operator--() { _current = (_direction == forward) ? _current->_next : _current->_prev; }
-		void operator--(int none) { _current = (_direction == forward) ? _current->_prev : _current->_next; }
-		void operator==(iterator i) { return (this->_current == i._current) ? true : false; }
-		void operator!=(iterator i) { return (this->_current != i._current) ? true : false; }
+		void operator--(int none)
+		{
+			UNREFERENCED_PARAMETER(none);
+			_current = (_direction == forward) ? _current->_prev : _current->_next; 
+		}
+		bool operator==(iterator i) { return (this->_current == i._current) ? true : false; }
+		bool operator!=(iterator i) { return (this->_current != i._current) ? true : false; }
 		llist_node<T> &operator*() { return *_current; }
 		llist_node<T>* operator->() { return _current; }
 
@@ -84,7 +94,4 @@ private:
 	size_t _nr_llist_nodes;
 	llist_node<T>* _head;
 	llist_node<T>* _tail;
-
-private:
-	void clear() { while (this->DeleteHead()); }
 };

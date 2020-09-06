@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{25BE3FE4-8AA7-4818-8344-CEE9642BA934}</ProjectGuid>
-    <RootNamespace>jegseion</RootNamespace>
+    <ProjectGuid>{93F066D9-E6A5-4046-8410-7691CA7CBA40}</ProjectGuid>
+    <RootNamespace>jigseon</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -76,7 +76,7 @@
     <OutDir>$(SolutionDir)out\x64_debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)out\x64_debug\</OutDir>
+    <OutDir>$(SolutionDir)out\x64_release\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)out\x86_release\</OutDir>
@@ -162,7 +162,7 @@ echo "[*] Copy binary to debuggee...Done"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="llist.cpp" />
+    <ClCompile Include="llist.hpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -171,8 +171,8 @@ echo "[*] Copy binary to debuggee...Done"</Command>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ExceptionClass.h" />
     <ClInclude Include="llist.h" />
-    <ClInclude Include="Src\ExceptionClass.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,6 @@
 #include "stdafx.h"
-#include "jegseion/llist.h"
+
+#include "llist.h"
 
 ///	@brief
 template <class T>
@@ -40,7 +41,7 @@ llist<T>::llist(_In_ T data)
 {
 	_head = new llist_node<T>(data);
 	if (nullptr == _head)
-		throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
+		throw BADALLOC
 
 	_nr_llist_nodes = 1;
 	_head->_next = nullptr;
@@ -54,7 +55,7 @@ llist<T>::llist(_In_ T data)
 template <class T>
 llist<T>::llist(_In_ const llist<T>& cls) // 복사 생성자
 {
-	llist_node<T>* temp;
+	llist_node<T>* temp = nullptr;
 
 	_nr_llist_nodes = 0;
 	_tail = nullptr;
@@ -84,7 +85,7 @@ llist<T>::InsertHead(_In_ const T& data)
 	if (nullptr == _head)
 	{
 		_head = new llist_node<T>(data);
-		if (nullptr == _head) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
+		if (nullptr == _head) throw BADALLOC
 		
 		_head->_next = nullptr;
 		_head->_prev = nullptr;
@@ -94,7 +95,7 @@ llist<T>::InsertHead(_In_ const T& data)
 	{
 		llist_node<T>* temp = _head;
 		_head = new llist_node<T>(data);
-		if (nullptr == _head) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
+		if (nullptr == _head) throw BadAlloc
 		_head->_next = temp;
 		temp->_prev = _head;
 		_head->_prev = nullptr;
@@ -112,7 +113,7 @@ llist<T>::InsertTail(_In_ const T& data)
 	if (nullptr == _tail)
 	{
 		_tail = new llist_node<T>(data);
-		if (nullptr == _tail) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
+		if (nullptr == _tail) throw BADALLOC
 		_tail->_next = nullptr;
 		_tail->_prev = nullptr;
 		_head = _tail;
@@ -121,7 +122,7 @@ llist<T>::InsertTail(_In_ const T& data)
 	{
 		llist_node<T>* temp = _tail;
 		_tail = new llist_node<T>(data);
-		if (nullptr == _tail) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
+		if (nullptr == _tail) throw BADALLOC
 		_tail->_prev = temp;
 		temp->_next = _tail;
 		_tail->_next = nullptr;
@@ -141,7 +142,7 @@ llist<T>::InsertAt(_In_ uint32_t index, _In_ const T& data)
 	
 	if (index < 0)
 	{
-		throw InvalidInputException(__LINE__, __FUNCTION__, __FILE__);
+		throw INVALIDINPUT
 	}
 
 	if (nullptr == _head || 0 == index)
@@ -162,7 +163,7 @@ llist<T>::InsertAt(_In_ uint32_t index, _In_ const T& data)
 		}
 
 		llist_node<T>* newllist_node = new llist_node<T>(data);
-		if (nullptr == _head) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
+		if (nullptr == _head) throw BADALLOC
 		newllist_node->_next = temp->_next;
 		newllist_node->_next->_prev = newllist_node;
 		temp->_next = newllist_node;
@@ -284,7 +285,7 @@ llist<T>::DeleteAt(_In_ uint32_t index)
 
 ///	@brief
 template <class T>
-llist_node<T>
+llist_node<T>*
 llist<T>::GetHead()
 {
 	return _head;
@@ -292,7 +293,7 @@ llist<T>::GetHead()
 
 ///	@brief
 template <class T>
-llist_node<T>
+llist_node<T>*
 llist<T>::GetTail()
 {
 	return _tail;
@@ -303,14 +304,14 @@ template <class T>
 T&
 llist<T>::operator[](int index)
 {
-	if (index >= this->_nr_llist_nodes || -index > this->_nr_llist_nodes)
+	if (index >= this->_nr_llist_nodes || -index > this->_nr_llist_nodes) // <-- ???
 	{
-		throw InvalidIndexException(__LINE__, __FUNCTION__, __FILE__);
+		throw INVALIDINPUT
 	}
 
 	auto it = (index >= 0) ? this->begin() : this->rbegin();
 
-	for (uint32_t i = 0; i < index; ++i)
+	for (int i = 0; i < index; ++i)
 		it++;
 
 	return it->_data;
@@ -363,4 +364,5 @@ template <class T>
 void
 llist<T>::sort()
 {
+
 }

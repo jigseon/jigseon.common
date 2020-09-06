@@ -13,15 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Src">
-      <UniqueIdentifier>{96e40b6c-3eed-436d-a205-e8fee77dcf1c}</UniqueIdentifier>
+    <Filter Include="jigseonSupport">
+      <UniqueIdentifier>{903361db-5b79-4765-8978-eb2c2cca5e86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="llist.cpp">
+    <ClCompile Include="llist.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,8 +29,8 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ExceptionClass.h">
-      <Filter>Src</Filter>
+    <ClInclude Include="ExceptionClass.h">
+      <Filter>jigseonSupport</Filter>
     </ClInclude>
     <ClInclude Include="llist.h">
       <Filter>Header Files</Filter>
