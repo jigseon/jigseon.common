@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-namespace igo_library
+namespace jigseaon
 {
 
     template <class T>
@@ -53,7 +53,7 @@ namespace igo_library
         ~llist();
 
         T& operator[] (int);
-        class iterator // llist::iteraor ´Â static ÂüÁ¶
+        class iterator // llist::iteraor ëŠ” static ì°¸ì¡°
         {
         private:
             llist_node<T>* currentP;
@@ -66,12 +66,12 @@ namespace igo_library
             void operator++(int none) { currentP = (direction == forward) ? currentP->next : currentP->prev;; }
             void operator--() { currentP = (direction == forward) ? currentP->prev : currentP->next; }
             void operator--(int none) { currentP = (direction == forward) ? currentP->prev : currentP->next; }
-            bool operator==(iterator i) { return (this->currentP == i.currentP) ? true : false; } // iterator &i ·Î ¹ŞÀ» °æ¿ì begin()¿¡¼­ ³ª¿Â iterator°¡  
+            bool operator==(iterator i) { return (this->currentP == i.currentP) ? true : false; } // iterator &i ë¡œ ë°›ì„ ê²½ìš° begin()ì—ì„œ ë‚˜ì˜¨ iteratorê°€  
             bool operator!=(iterator i) { return (this->currentP != i.currentP) ? true : false; }
             llist_node<T>& operator*() { return *currentP; }
             llist_node<T>* operator->() { return currentP; }
 
-            /* ->¸¦ ¿À¹ö·ÎµùÇÏ¸é x->f() ´Â ´ÙÀ½°ú °°ÀÌ ÇØ¼®µÈ´Ù
+            /* ->ë¥¼ ì˜¤ë²„ë¡œë”©í•˜ë©´ x->f() ëŠ” ë‹¤ìŒê³¼ ê°™ì´ í•´ì„ëœë‹¤
             (x.operator->())->f().
             */
         };
@@ -114,7 +114,7 @@ namespace igo_library
     }
 
     template <class T>
-    llist<T>::llist(const llist<T>& l) // º¹»ç»ı¼ºÀÚ
+    llist<T>::llist(const llist<T>& l) // ë³µì‚¬ìƒì„±ì
     {
         llist_node<T>* temp = l.GetHead();
 
@@ -157,7 +157,7 @@ namespace igo_library
     template <class T>
     bool llist<T>::InsertTail(T data)
     {
-        if (tail == NULL) // list°¡ empty
+        if (tail == NULL) // listê°€ empty
         {
             tail = new llist_node<T>(data);
             if (tail == NULL) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
@@ -198,7 +198,7 @@ namespace igo_library
         {
             for (int i = 1; i <= index - 1; i++)
             {
-                if (temp->next == NULL) // ¸ñÇ¥¿¡ µµ´ŞÇÏÁö ¸øÇÏ¿´´Âµ¥ ³ÎÀÌ¶ó¸é..
+                if (temp->next == NULL) // ëª©í‘œì— ë„ë‹¬í•˜ì§€ ëª»í•˜ì˜€ëŠ”ë° ë„ì´ë¼ë©´..
                 {
                     InsertTail(data);
                     return true;
@@ -300,7 +300,7 @@ namespace igo_library
             for (int i = 1; i <= index; i++)
             {
                 temp = temp->next;
-                if (temp->next == NULL) // ¸ñÇ¥¿¡ µµ´ŞÇÏÁö ¸øÇÏ¿´´Âµ¥ ³ÎÀÌ¶ó¸é..
+                if (temp->next == NULL) // ëª©í‘œì— ë„ë‹¬í•˜ì§€ ëª»í•˜ì˜€ëŠ”ë° ë„ì´ë¼ë©´..
                 {
                     DeleteTail();
                     return true;
