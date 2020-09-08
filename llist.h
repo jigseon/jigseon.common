@@ -8,7 +8,7 @@
 #include <Windows.h>
 #include <string>
 
-namespace igo_library
+namespace jigseon
 {
 	template <class T>
 	class llist_node
