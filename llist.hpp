@@ -2,7 +2,7 @@
 
 #include "llist.h"
 
-using namespace igo_library;
+using namespace jigseon;
 
 ///	@brief
 template <class T>
