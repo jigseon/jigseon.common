@@ -6,6 +6,14 @@ using namespace std;
 
 #define ASSERT(x) x;
 
+
+#define INVALIDINPUT	InvalidInputException(__LINE__, __FUNCTION__, __FILE__);
+#define ZERODEVIDE		ZeroDevideException(__LINE__, __FUNCTION__, __FILE__);
+#define BIGINTEGER		BigIntegerException(__LINE__, __FUNCTION__, __FILE__);
+#define INVALIDINDEX	InvalidIndexException(__LINE__, __FUNCTION__, __FILE__);
+#define NULLPOINT		NullPointException(__LINE__, __FUNCTION__, __FILE__);
+#define BADALLOC		BadAllocException(__LINE__, __FUNCTION__, __FILE__);
+
 class ExceptionBase
 {
 	int line;
