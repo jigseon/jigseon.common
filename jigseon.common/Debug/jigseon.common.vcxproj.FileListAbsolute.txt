@@ -1,0 +1,2 @@
+C:\Users\opddr\source\repos\jigseon.common\Debug\jigseon.common.pdb
+C:\Users\opddr\source\repos\jigseon.common\jigseon.common\Debug\jigseon.common.pdb
