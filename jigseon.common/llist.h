@@ -277,6 +277,22 @@ namespace jigseon
 	{
 		if (_nr_llist_nodes == 0)
 			return false;
+		try
+		{
+			if (node != _tail)
+			{
+				if (node == NULL)
+					return false;
+				if (node->_next == NULL)
+					return false;
+				if (node->_next->_prev != node)
+					return false;
+			}
+		}
+		catch (...) // access violation 처리하고 싶었지만..
+		{
+			return true;
+		}
 
 		_nr_llist_nodes--;
 
@@ -411,7 +427,7 @@ namespace jigseon
 	T&
 		llist<T>::operator[](int index)
 	{
-		if (index >= this->_nr_llist_nodes || -index > (int)this->_nr_llist_nodes)
+		if (index >= this->_nr_llist_nodes || -index > static_cast<int>(this->_nr_llist_nodes))
 		{
 			throw INVALIDINPUT;
 		}
@@ -470,7 +486,7 @@ namespace jigseon
 		}
 		for (auto it = this->begin(); it != this->end(); it++)
 		{
-			it->_data = maxheap.dequeue().data;
+			it->_data = maxheap.dequeue()._data;
 		}
 	}
 
@@ -485,7 +501,7 @@ namespace jigseon
 		}
 		for (auto it = this->begin(); it != this->end(); it++)
 		{
-			it->_data = minheap.dequeue().data;
+			it->_data = minheap.dequeue()._data;
 		}
 	}
 }

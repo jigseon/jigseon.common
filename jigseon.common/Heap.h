@@ -11,15 +11,15 @@ namespace jigseon
 	template <class T>
 	struct HeapNode
 	{
-		int key;
-		T data;
-		int status;
+		int _key;
+		T _data;
+		int _status;
 
 		HeapNode(int key = -1, T data = 0)
 		{
-			this->key = key;
-			this->data = data;
-			this->status = present;
+			this->_key = key;
+			this->_data = data;
+			this->_status = present;
 		}
 	};
 
@@ -27,9 +27,9 @@ namespace jigseon
 	class Heap
 	{
 	private:
-		HeapNode<T>* heap;
-		int count, capacity;
-		int mode;
+		HeapNode<T>* _heap;
+		int _count, _capacity;
+		int _mode;
 
 	public:
 		Heap(int n = 100, int mode = minimum);
@@ -39,25 +39,25 @@ namespace jigseon
 
 		class iterator
 		{
-			HeapNode<T>* currentP;
-			bool direction;
+			HeapNode<T>* _currentP;
+			bool _direction;
 		public:
 			enum directions { forward, backward };
-			iterator(HeapNode<T>* current, bool dir = forward) { currentP = current; direction = dir; }
+			iterator(HeapNode<T>* current, bool dir = forward) { _currentP = current; _direction = dir; }
 
-			void operator++() { currentP = (direction == forward) ? currentP + 1 : currentP - 1; }
-			void operator++(int none) { currentP = (direction == forward) ? currentP + 1 : currentP - 1; }
-			void operator--() { (direction == forward) ? currentP - 1 : currentP + 1; }
-			void operator--(int none) { currentP = (direction == forward) ? currentP - 1 : currentP + 1; }
-			bool operator==(iterator i) { return (this->currentP == i.currentP) ? true : false; } // iterator &i ·Î ¹ÞÀ» °æ¿ì begin()¿¡¼­ ³ª¿Â iterator°¡  
-			bool operator!=(iterator i) { return (this->currentP != i.currentP) ? true : false; }
-			HeapNode<T> operator*() { return *currentP; }
-			HeapNode<T>* operator->() { return currentP; }
+			void operator++() { _currentP = (_direction == forward) ? _currentP + 1 : _currentP - 1; }
+			void operator++(int none) { _currentP = (_direction == forward) ? _currentP + 1 : _currentP - 1; }
+			void operator--() { (_direction == forward) ? _currentP - 1 : _currentP + 1; }
+			void operator--(int none) { _currentP = (_direction == forward) ? _currentP - 1 : _currentP + 1; }
+			bool operator==(iterator i) { return (this->_currentP == i._currentP) ? true : false; } // iterator &i ·Î ¹ÞÀ» °æ¿ì begin()¿¡¼­ ³ª¿Â iterator°¡  
+			bool operator!=(iterator i) { return (this->_currentP != i._currentP) ? true : false; }
+			HeapNode<T>& operator*() { return *_currentP; }
+			HeapNode<T>* operator->() { return _currentP; }
 		};
-		iterator begin() { return iterator(this->heap); }
-		iterator end() { return iterator(this->heap + count); }
-		iterator rbegin() { return iterator(this->heap + count - 1, iterator::backward); }
-		iterator rend() { return iterator(this->heap - 1, iterator::backward); }
+		iterator begin() { return iterator(this->_heap); }
+		iterator end() { return iterator(this->_heap + _count); }
+		iterator rbegin() { return iterator(this->_heap + _count - 1, iterator::backward); }
+		iterator rend() { return iterator(this->_heap - 1, iterator::backward); }
 
 		HeapNode<T>& operator[](int index);
 
@@ -65,11 +65,11 @@ namespace jigseon
 	template <class T>
 	Heap<T>::Heap(int n, int mode)
 	{
-		this->heap = new HeapNode<T>[n];
-		if (this->heap == NULL) throw BadAllocException(__LINE__, __FUNCTION__, __FILE__);
-		this->capacity = n;
-		this->count = 0;
-		this->mode = mode;
+		this->_heap = new HeapNode<T>[n];
+		if (this->_heap == NULL) throw BADALLOC;
+		this->_capacity = n;
+		this->_count = 0;
+		this->_mode = mode;
 	}
 
 
@@ -86,34 +86,34 @@ namespace jigseon
 	template <class T>
 	bool Heap<T>::enqueue(int key, T data)
 	{
-		if (capacity <= count)
+		if (_capacity <= _count)
 			return false;
 
-		int current = count;
+		int current = _count;
 
-		heap[current].key = key;
-		heap[current].data = data;
-		heap[current].status = present;
+		_heap[current]._key = key;
+		_heap[current]._data = data;
+		_heap[current]._status = present;
 
-		count++;
+		_count++;
 
-		while (heap[current].status != absent && current >= 0)
+		while (_heap[current]._status != absent && current >= 0)
 		{
 
-			if (this->mode == minimum)
+			if (this->_mode == minimum)
 			{
-				if (heap[current].key >= heap[(current - 1) / 2].key)
+				if (_heap[current]._key >= _heap[(current - 1) / 2]._key)
 					return true;
 
-				swap(heap + current, heap + (current - 1) / 2);
+				swap(_heap + current, _heap + (current - 1) / 2);
 				current = (current - 1) / 2;
 			}
 			else
 			{
-				if (heap[current].key <= heap[(current - 1) / 2].key)
+				if (_heap[current]._key <= _heap[(current - 1) / 2]._key)
 					return true;
 
-				swap(heap + current, heap + (current - 1) / 2);
+				swap(_heap + current, _heap + (current - 1) / 2);
 				current = (current - 1) / 2;
 			}
 		}
@@ -138,25 +138,25 @@ namespace jigseon
 		int current, successor;
 		HeapNode<T> res;
 
-		if (count <= 0)
+		if (_count <= 0)
 			return HeapNode<T>();
 
-		swap(heap, heap + (count - 1));
+		swap(_heap, _heap + (_count - 1));
 
-		res = heap[count - 1];
-		heap[count - 1].status = absent;
-		count--;
+		res = _heap[_count - 1];
+		_heap[_count - 1]._status = absent;
+		_count--;
 		current = 0;
 
-		while (current <= count - 1)
+		while (current <= _count - 1)
 		{
-			if (this->mode == minimum)
+			if (this->_mode == minimum)
 			{
-				successor = (heap[current * 2 + 1].key < heap[current * 2 + 2].key) ? current * 2 + 1 : current * 2 + 2;
+				successor = (_heap[current * 2 + 1]._key < _heap[current * 2 + 2]._key) ? current * 2 + 1 : current * 2 + 2;
 
-				if (heap[current].key >= heap[successor].key && heap[successor].status != absent)
+				if (_heap[current]._key >= _heap[successor]._key && _heap[successor]._status != absent)
 				{
-					swap(heap + current, heap + successor);
+					swap(_heap + current, _heap + successor);
 					current = current * 2 + 1;
 				}
 				else
@@ -164,11 +164,11 @@ namespace jigseon
 			}
 			else
 			{
-				successor = (heap[current * 2 + 1].key > heap[current * 2 + 2].key) ? current * 2 + 1 : current * 2 + 2;
+				successor = (_heap[current * 2 + 1]._key > _heap[current * 2 + 2]._key) ? current * 2 + 1 : current * 2 + 2;
 
-				if (heap[current].key <= heap[successor].key && heap[successor].status != absent)
+				if (_heap[current]._key <= _heap[successor]._key && _heap[successor]._status != absent)
 				{
-					swap(heap + current, heap + successor);
+					swap(_heap + current, _heap + successor);
 					current = current * 2 + 1;
 				}
 				else
@@ -185,11 +185,11 @@ namespace jigseon
 	{
 		if (index >= this->count || -index > this->count)
 		{
-			throw InvalidIndexException(__LINE__, __FUNCTION__, __FILE__);
+			throw INVALIDINDEX;
 		}
 
-		index = (index > 0) ? index : this->count + index;
+		index = (index > 0) ? index : this->_count + index;
 
-		return this->heap[index];
+		return this->_heap[index];
 	}
 }
