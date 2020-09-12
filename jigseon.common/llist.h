@@ -61,7 +61,7 @@ namespace jigseon
 				UNREFERENCED_PARAMETER(none);
 				_current = (_direction == forward) ? _current->_next : _current->_prev;
 			}
-			void operator--() { _current = (_direction == forward) ? _current->_next : _current->_prev; }
+			void operator--() { _current = (_direction == forward) ? _current->_prev : _current->_next; }
 			void operator--(int none)
 			{
 				UNREFERENCED_PARAMETER(none);
@@ -72,10 +72,6 @@ namespace jigseon
 			llist_node<T>& operator*() { return *_current; }
 			llist_node<T>* operator->() { return _current; }
 
-			//
-			// ->를 오버로딩하면 x->f() 는 다음과 같이 해석된다.
-			// (x.operator->())->f().
-			//
 		private:
 			llist_node<T>* _current;
 			bool _direction;
@@ -138,9 +134,9 @@ namespace jigseon
 	{
 		_head = new llist_node<T>(data);
 		if (nullptr == _head)
-			throw BADALLOC
+			throw BADALLOC;
 
-			_nr_llist_nodes = 1;
+		_nr_llist_nodes = 1;
 		_head->_next = nullptr;
 		_head->_prev = nullptr;
 		_tail = _head;
@@ -182,9 +178,10 @@ namespace jigseon
 		if (nullptr == _head)
 		{
 			_head = new llist_node<T>(data);
-			if (nullptr == _head) throw BADALLOC
+			if (nullptr == _head) 
+				throw BADALLOC;
 
-				_head->_next = nullptr;
+			_head->_next = nullptr;
 			_head->_prev = nullptr;
 			_tail = _head;
 		}
@@ -192,8 +189,9 @@ namespace jigseon
 		{
 			llist_node<T>* temp = _head;
 			_head = new llist_node<T>(data);
-			if (nullptr == _head) throw BADALLOC
-				_head->_next = temp;
+			if (nullptr == _head) 
+				throw BADALLOC;
+			_head->_next = temp;
 			temp->_prev = _head;
 			_head->_prev = nullptr;
 		}
@@ -210,8 +208,9 @@ namespace jigseon
 		if (nullptr == _tail)
 		{
 			_tail = new llist_node<T>(data);
-			if (nullptr == _tail) throw BADALLOC
-				_tail->_next = nullptr;
+			if (nullptr == _tail) 
+				throw BADALLOC;
+			_tail->_next = nullptr;
 			_tail->_prev = nullptr;
 			_head = _tail;
 		}
@@ -219,8 +218,9 @@ namespace jigseon
 		{
 			llist_node<T>* temp = _tail;
 			_tail = new llist_node<T>(data);
-			if (nullptr == _tail) throw BADALLOC
-				_tail->_prev = temp;
+			if (nullptr == _tail) 
+				throw BADALLOC;
+			_tail->_prev = temp;
 			temp->_next = _tail;
 			_tail->_next = nullptr;
 		}
@@ -239,7 +239,7 @@ namespace jigseon
 
 		if (index < 0)
 		{
-			throw INVALIDINPUT
+			throw INVALIDINPUT;
 		}
 
 		if (nullptr == _head || 0 == index)
@@ -260,8 +260,9 @@ namespace jigseon
 			}
 
 			llist_node<T>* newllist_node = new llist_node<T>(data);
-			if (nullptr == _head) throw BADALLOC
-				newllist_node->_next = temp->_next;
+			if (nullptr == _head) 
+				throw BADALLOC;
+			newllist_node->_next = temp->_next;
 			newllist_node->_next->_prev = newllist_node;
 			temp->_next = newllist_node;
 			newllist_node->_prev = temp;
@@ -331,10 +332,10 @@ namespace jigseon
 
 		if (_tail == _head)
 		{
+			delete _tail; 
 			_tail = nullptr;
 			_head = nullptr;
 
-			delete _tail; // <-- ???
 			return true;
 		}
 
@@ -361,7 +362,7 @@ namespace jigseon
 			return false;
 
 
-		_nr_llist_nodes--; // <-- ???
+		_nr_llist_nodes--;
 		llist_node<T>* temp = _head;
 
 		if (index == 0)
@@ -410,9 +411,9 @@ namespace jigseon
 	T&
 		llist<T>::operator[](int index)
 	{
-		if (index >= this->_nr_llist_nodes || -index > (int)this->_nr_llist_nodes) // <-- ???
+		if (index >= this->_nr_llist_nodes || -index > (int)this->_nr_llist_nodes)
 		{
-			throw INVALIDINPUT
+			throw INVALIDINPUT;
 		}
 
 		auto it = (index >= 0) ? this->begin() : this->rbegin();
