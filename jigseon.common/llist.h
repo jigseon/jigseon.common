@@ -146,7 +146,7 @@ namespace jigseon
 
 	///	@brief
 	template <class T>
-	llist<T>::llist(_In_ const llist<T>& cls) // 복사 생성자
+	llist<T>::llist(_In_ const llist<T>& cls)
 	{
 		llist_node<T>* temp = cls.GetHead();
 

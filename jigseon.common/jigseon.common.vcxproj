@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="ExceptionClass.h" />
     <ClInclude Include="Heap.h" />
+    <ClInclude Include="list.h" />
     <ClInclude Include="llist.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
