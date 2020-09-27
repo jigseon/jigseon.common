@@ -18,18 +18,18 @@ int main()
 		a.append(5);
 		a.append(6);
 		a.append(7);
-		a.remove(1);
-		a.remove(2);
-		a.remove(5);
-		a.remove(3);
-		a.remove(4);
-		a.remove(6);
-		a.remove(7);
 	}
 	catch (BadAllocException e)
 	{
 		e.print();
 		exit(1);
+	}
+
+	auto it = a.begin();
+
+	for (;it != a.end();it++)
+	{
+		cout << *it;
 	}
 
 

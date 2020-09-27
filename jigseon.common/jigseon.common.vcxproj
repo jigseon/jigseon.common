@@ -171,6 +171,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Desktop\jigseon.common-dev-issue_2\jigseon.common\Heap.h" />
     <ClInclude Include="ExceptionClass.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="list.h" />
