@@ -30,7 +30,19 @@
     <ClInclude Include="list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Desktop\jigseon.common-dev-issue_2\jigseon.common\Heap.h">
+    <ClInclude Include="BigNumber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RBTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

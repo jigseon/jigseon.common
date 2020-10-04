@@ -1,11 +1,38 @@
 #include "../jigseon.common/list.h"
-
+#include "../jigseon.common/llist.h"
+#include "../jigseon.common/HashTable.h"
 
 using namespace jigseon;
 
+void test_list();
+void test_llist();
+void test_HashTable();
 
 
 int main()
+{
+	test_HashTable();
+}
+
+void test_HashTable()
+{
+	HashTable<int> ht;
+	ht.add("asdf",1);
+	ht.add("zxcz",2);
+	ht.add("asdf", 3);
+	ht.add("r2", 4);
+	ht.add("ax", 5);
+	ht.add("g3", 6);
+	ht.add("asdf", 7);
+
+
+	auto it = ht.begin();
+	for (; it != ht.end(); it++)
+	{
+		cout << it->_key << it->_value << endl;
+	}
+}
+void test_list()
 {
 	list<int> a;
 
@@ -27,17 +54,12 @@ int main()
 
 	auto it = a.begin();
 
-	for (;it != a.end();it++)
+	for (; it != a.end(); it++)
 	{
 		cout << *it;
 	}
-
-
 }
-
-
-/*
-int main()
+void test_llist()
 {
 	llist<int> a;
 
@@ -103,4 +125,5 @@ int main()
 	{
 		cout << it->_data << endl;
 	}
-}*/
+}
+

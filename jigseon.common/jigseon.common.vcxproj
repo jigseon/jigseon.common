@@ -171,12 +171,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Desktop\jigseon.common-dev-issue_2\jigseon.common\Heap.h" />
+    <ClInclude Include="BigNumber.h" />
     <ClInclude Include="ExceptionClass.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="HashTable.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="llist.h" />
+    <ClInclude Include="RBTree.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="jigseon.common.cpp" />
