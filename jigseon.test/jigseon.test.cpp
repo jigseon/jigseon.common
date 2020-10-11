@@ -11,7 +11,7 @@ void test_HashTable();
 
 int main()
 {
-	test_HashTable();
+	test_list();
 }
 
 void test_HashTable()
@@ -38,12 +38,19 @@ void test_list()
 
 	try
 	{
-		a.append(1);
-		a.append(2);
-		a.append(3);
+		a.append(52351);
+		a.append(123412);
+		a.append(124124);
 		a.append(4);
+		a.append(124);
+		a.append(41234);
+		a.append(3);
+		a.append(124);
+		a.append(134);
+		a.append(1);
+		a.append(7);
 		a.append(5);
-		a.append(6);
+		a.append(1243);
 		a.append(7);
 	}
 	catch (BadAllocException e)
@@ -52,12 +59,6 @@ void test_list()
 		exit(1);
 	}
 
-	auto it = a.begin();
-
-	for (; it != a.end(); it++)
-	{
-		cout << *it;
-	}
 }
 void test_llist()
 {
