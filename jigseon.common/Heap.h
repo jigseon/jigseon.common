@@ -156,8 +156,11 @@ namespace jigseon
 
 				if (_heap[current]._key >= _heap[successor]._key && _heap[successor]._status != absent)
 				{
+					if (successor >= _count)
+						return res;
 					swap(_heap + current, _heap + successor);
 					current = current * 2 + 1;
+
 				}
 				else
 					return res;
@@ -168,6 +171,8 @@ namespace jigseon
 
 				if (_heap[current]._key <= _heap[successor]._key && _heap[successor]._status != absent)
 				{
+					if (successor >= _count)
+						return res;
 					swap(_heap + current, _heap + successor);
 					current = current * 2 + 1;
 				}

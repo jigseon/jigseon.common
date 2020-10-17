@@ -58,6 +58,26 @@ void test_list()
 		e.print();
 		exit(1);
 	}
+	auto it = a.begin();
+	for (int i =0 ; it != a.end();i++, it++)
+	{
+		cout <<i<<". "<< *it << endl;
+	}
+	cout << "------------------------------" << endl;
+	a.sort();
+	it = a.begin();
+	for (int i = 0; it != a.end(); i++, it++)
+	{
+		cout << i << ". " << *it << endl;
+	}
+	cout << "------------------------------" << endl;
+	a.reverse();
+	it = a.begin();
+	for (int i = 0; it != a.end(); i++, it++)
+	{
+		cout << i << ". " << *it << endl;
+	}
+
 
 }
 void test_llist()
@@ -66,13 +86,21 @@ void test_llist()
 
 	try
 	{
-		a.append(1);
-		a.append(2);
-		a.append(3);
+		a.append(52351);
+		a.append(123412);
+		a.append(124124);
 		a.append(4);
-		a.append(5);
-		a.append(6);
+		a.append(124);
+		a.append(41234);
+		a.append(3);
+		a.append(124);
+		a.append(134);
+		a.append(1);
 		a.append(7);
+		a.append(5);
+		a.append(1243);
+		a.append(7);
+
 	}
 	catch (BadAllocException e)
 	{

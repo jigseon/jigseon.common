@@ -203,10 +203,6 @@ namespace jigseon
 
 	///	@brief
 	template <class T>
-	void list<T>::sort();
-
-	///	@brief
-	template <class T>
 	void list<T>::clear()
 	{
 		_nr_list_nodes = 0;
