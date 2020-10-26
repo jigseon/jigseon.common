@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "ExceptionClass.h"
-#include "LinkedList.h"
+#include "llist.h"
 
 template <class S, class T> class Tree;
 
@@ -10,9 +10,9 @@ template <class S, class T>
 class TreeNode
 {
 protected:
-	S key;
-	T data;
-	TreeNode* leftchild, * rightchild, * parent;
+	S _key;
+	T _data;
+	TreeNode* _leftchild, * _rightchild, * _parent;
 public:
 	TreeNode() { key = S(); data = T(); leftchild = rightchild = parent = NULL; }
 	TreeNode(S k, T d) { key = k; data = d; leftchild = rightchild = parent = NULL; }
@@ -38,8 +38,8 @@ template <class S, class T>
 class Tree
 {
 protected:
-	TreeNode<S, T>* root;
-	TreeNode<S, T>* current;
+	TreeNode<S, T>* _root;
+	TreeNode<S, T>* _current;
 public:
 	Tree() { root = NULL; current = NULL; }
 	Tree(S k, T d) { root = new TreeNode(k, d); current = root; }
