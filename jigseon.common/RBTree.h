@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <iterator>
-#include "LinkedList.h"
+#include "llist.h"
 #include "ExceptionClass.h"
 #include <queue>
 using namespace std;
@@ -14,28 +14,28 @@ template <class S, class T>
 class RBTreeNode
 {
 protected:
-	S key;
-	T data;
-	int color;
-	int depth;
-	RBTreeNode *leftchild, *rightchild, *parent;
+	S _key;
+	T _data;
+	int _color;
+	int _depth;
+	RBTreeNode * _leftchild, * _rightchild, * _parent;
 
 public:
-	RBTreeNode() { key = S(); data = T(); color = red; leftchild = rightchild = parent = NULL; }
-	RBTreeNode(S k, T d) { key = k; data = d; color = red; leftchild = rightchild = parent = NULL; }
-	RBTreeNode(const RBTreeNode &t) { this->key = t.key; this->data = t.data; this->color = red; this->leftchild = t.leftchild; this->rightchild = t.rightchild; this->parent = t.parent; }
+	RBTreeNode() { _key = S(); _data = T(); _color = red; _leftchild = _rightchild = _parent = NULL; }
+	RBTreeNode(S k, T d) { _key = k; _data = d; _color = red; _leftchild = _rightchild = _parent = NULL; }
+	RBTreeNode(const RBTreeNode &t) { this->_key = t._key; this->_data = t._data; this->_color = red; this->_leftchild = t._leftchild; this->_rightchild = t._rightchild; this->_parent = t._parent; }
 
-	RBTreeNode *get_left_child() { return leftchild; }
-	RBTreeNode *get_right_child() { return rightchild; }
-	void delete_left_child() { delete leftchild; leftchild = NULL; }
-	void delete_right_child() { delete rightchild; rightchild = NULL; }
-	RBTreeNode *get_parent() { return parent; }
+	RBTreeNode *get_left_child() { return _leftchild; }
+	RBTreeNode *get_right_child() { return _rightchild; }
+	void delete_left_child() { delete _leftchild; _leftchild = NULL; }
+	void delete_right_child() { delete _rightchild; _rightchild = NULL; }
+	RBTreeNode *get_parent() { return _parent; }
 	RBTreeNode *set_left_child(S k, T d);
 	RBTreeNode *set_right_child(S k, T d);
-	S get_key() { return key; }
-	T get_data() { return data; }
-	void set_key(S k) { key = k; }
-	void set_data(T d) { data = d; }
+	S get_key() { return _key; }
+	T get_data() { return _data; }
+	void set_key(S k) { _key = k; }
+	void set_data(T d) { _data = d; }
 	
 	friend class RBTree<S, T>;
 };
@@ -67,9 +67,9 @@ public:
 	void remove_left_child();
 	void remove_right_child();
 
-	LinkedList<RBTreeNode<S, T>*> preorder_traverse();
-	LinkedList<RBTreeNode<S, T>*> inorder_traverse();
-	LinkedList<RBTreeNode<S, T>*> postorder_traverse();
+	llist<RBTreeNode<S, T>*> preorder_traverse();
+	llist<RBTreeNode<S, T>*> inorder_traverse();
+	llist<RBTreeNode<S, T>*> postorder_traverse();
 	void levelorder_print();
 
 	bool insert_node(S, T);
@@ -88,9 +88,9 @@ public:
 
 
 	friend void active_destructor(RBTreeNode<S, T> *);
-	friend bool active_preorder_traverse(RBTreeNode<S, T> *, LinkedList<RBTreeNode<S, T> *> &);
-	friend bool active_inorder_traverse(RBTreeNode<S, T> *, LinkedList<RBTreeNode<S, T> *> &);
-	friend bool active_postorder_traverse(RBTreeNode<S, T> *, LinkedList<RBTreeNode<S, T> *> &);
+	friend bool active_preorder_traverse(RBTreeNode<S, T> *, llist<RBTreeNode<S, T> *> &);
+	friend bool active_inorder_traverse(RBTreeNode<S, T> *, llist<RBTreeNode<S, T> *> &);
+	friend bool active_postorder_traverse(RBTreeNode<S, T> *, llist<RBTreeNode<S, T> *> &);
 };
 
 template <class S, class T>
@@ -154,16 +154,16 @@ void RBTree<S, T>::remove_right_child()
 }
 
 template <class S, class T>
-LinkedList<RBTreeNode<S,T> *> RBTree<S, T>::preorder_traverse()
+llist<RBTreeNode<S,T> *> RBTree<S, T>::preorder_traverse()
 {
-	LinkedList<RBTreeNode<S, T>*> res;
+	llist<RBTreeNode<S, T>*> res;
 	active_preorder_traverse(this->root, res);
 
 	return res;
 }
 
 template <class S, class T>
-bool active_preorder_traverse(RBTreeNode<S, T> *vector, LinkedList<RBTreeNode<S, T>*> &l)
+bool active_preorder_traverse(RBTreeNode<S, T> *vector, llist<RBTreeNode<S, T>*> &l)
 {
 	l.InsertTail(vector);
 	if (vector->get_left_child() != NULL)
@@ -175,16 +175,16 @@ bool active_preorder_traverse(RBTreeNode<S, T> *vector, LinkedList<RBTreeNode<S,
 }
 
 template <class S, class T>
-LinkedList<RBTreeNode<S, T>* > RBTree<S, T>::inorder_traverse()
+llist<RBTreeNode<S, T>* > RBTree<S, T>::inorder_traverse()
 {
-	LinkedList<RBTreeNode<S, T>*> res;
+	llist<RBTreeNode<S, T>*> res;
 	active_inorder_traverse(this->root, res);
 
 	return res;
 }
 
 template <class S, class T>
-bool active_inorder_traverse(RBTreeNode<S, T> *vector, LinkedList<RBTreeNode<S, T>*> &l)
+bool active_inorder_traverse(RBTreeNode<S, T> *vector, llist<RBTreeNode<S, T>*> &l)
 {
 	if (vector->get_left_child() != NULL)
 		active_inorder_traverse(vector->get_left_child(), l);
@@ -196,16 +196,16 @@ bool active_inorder_traverse(RBTreeNode<S, T> *vector, LinkedList<RBTreeNode<S, 
 }
 
 template <class S, class T>
-LinkedList<RBTreeNode<S, T>* > RBTree<S, T>::postorder_traverse()
+llist<RBTreeNode<S, T>* > RBTree<S, T>::postorder_traverse()
 {
-	LinkedList<RBTreeNode<S, T>*> res;
+	llist<RBTreeNode<S, T>*> res;
 	active_postorder_traverse(this->root, res);
 
 	return res;
 }
 
 template <class S, class T>
-bool active_postorder_traverse(RBTreeNode<S, T> *vector, LinkedList<RBTreeNode<S, T>* > &l)
+bool active_postorder_traverse(RBTreeNode<S, T> *vector, llist<RBTreeNode<S, T>* > &l)
 {
 	if (vector->get_left_child() != NULL)
 		active_postorder_traverse(vector->get_left_child(), l);
