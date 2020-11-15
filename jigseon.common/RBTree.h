@@ -44,25 +44,25 @@ template <class S, class T>
 class RBTree
 {
 protected:
-	RBTreeNode<S, T> *root;
-	RBTreeNode<S, T> *current;
+	RBTreeNode<S, T> *_root;
+	RBTreeNode<S, T> *_current;
 
 	bool rb_insert_process(RBTreeNode <S, T> *);
 	bool rb_delete_process( RBTreeNode <S, T> *, RBTreeNode <S, T> *);
 public:
-	RBTree() { root = NULL; current = NULL; }
-	RBTree(S k, T d) { root = new RBTreeNode(k, d); current = root; }
+	RBTree() { _root = NULL; _current = NULL; }
+	RBTree(S k, T d) { _root = new RBTreeNode(k, d); _current = _root; }
 	//RBTree(const RBTree &);
 	~RBTree();
 
-	RBTreeNode<S,T> * set_root(S k, T d) { root = new RBTreeNode<S, T>(k, d); root->color = black; current = root; return root; }
-	void set_current_as_root() { current = root; }
-	RBTreeNode <S, T> *get_root() { return this->root; }
-	RBTreeNode <S, T> *get_current_node() { return this->current; }
+	RBTreeNode<S,T> * set_root(S k, T d) { _root = new RBTreeNode<S, T>(k, d); _root->_color = black; _current = _root; return _root; }
+	void set_current_as_root() { _current = _root; }
+	RBTreeNode <S, T> *get_root() { return this->_root; }
+	RBTreeNode <S, T> *get_current_node() { return this->_current; }
 	RBTreeNode <S, T> *find(S);
-	void move_to_left() { current = current->get_left_child(); }
-	void move_to_right() { current = current->get_right_child(); }
-	void move_to_parent() { current = current->parent; }
+	void move_to_left() { _current = _current->get_left_child(); }
+	void move_to_right() { _current = _current->get_right_child(); }
+	void move_to_parent() { _current = _current->_parent; }
 
 	void remove_left_child();
 	void remove_right_child();
@@ -96,26 +96,26 @@ public:
 template <class S, class T>
 RBTreeNode<S, T>* RBTreeNode<S, T>::set_left_child(S k, T d)
 {
-	leftchild = new RBTreeNode(k, d);
-	leftchild->parent = this;
-	return leftchild;
+	_leftchild = new RBTreeNode(k, d);
+	_leftchild->_parent = this;
+	return _leftchild;
 }
 
 template <class S, class T>
 RBTreeNode<S, T>* RBTreeNode<S, T>::set_right_child(S k, T d)
 {
-	rightchild = new RBTreeNode(k, d);
-	rightchild->parent = this;
-	return rightchild;
+	_rightchild = new RBTreeNode(k, d);
+	_rightchild->_parent = this;
+	return _rightchild;
 }
 
 
 template <class S, class T>
 RBTree<S, T>::~RBTree()
 {
-	active_destructor(root);
-	delete(this->root);
-	this->root = NULL;
+	active_destructor(_root);
+	delete(this->_root);
+	this->_root = NULL;
 }
 
 template<class S, class T>
@@ -125,15 +125,15 @@ inline RBTreeNode<S, T>* RBTree<S, T>::find(S key)
 
 	while (vector)
 	{
-		if (vector->key == key)
+		if (vector->_key == key)
 			break;
-		else if (vector->key > key)
+		else if (vector->_key > key)
 		{
-			vector = vector->leftchild;
+			vector = vector->_leftchild;
 		}
 		else
 		{
-			vector = vector->rightchild;
+			vector = vector->_rightchild;
 		}
 	}
 	return vector;
@@ -142,22 +142,22 @@ inline RBTreeNode<S, T>* RBTree<S, T>::find(S key)
 template <class S, class T>
 void RBTree<S, T>::remove_left_child()
 {
-	delete current->rightchild;
-	current->rightchild = NULL;
+	delete _current->_rightchild;
+	_current->_rightchild = NULL;
 }
 
 template <class S, class T>
 void RBTree<S, T>::remove_right_child()
 {
-	delete current->leftchild;
-	current->leftchild = NULL;
+	delete _current->_leftchild;
+	_current->_leftchild = NULL;
 }
 
 template <class S, class T>
-llist<RBTreeNode<S,T> *> RBTree<S, T>::preorder_traverse()
+llist< RBTreeNode<S,T> *> RBTree<S, T>::preorder_traverse()
 {
 	llist<RBTreeNode<S, T>*> res;
-	active_preorder_traverse(this->root, res);
+	active_preorder_traverse(this->_root, res);
 
 	return res;
 }
@@ -222,7 +222,7 @@ bool active_postorder_traverse(RBTreeNode<S, T> *vector, llist<RBTreeNode<S, T>*
 template <class S, class T>
 int RBTree<S,T>::active_delete_node(RBTreeNode<S, T> *target, RBTreeNode<S, T> **vparent, RBTreeNode<S, T> **sibling)
 {
-	RBTreeNode<S, T> *vector = target, *parent = target->parent;
+	RBTreeNode<S, T> *vector = target, *parent = target->_parent;
 	int old_color;
 
 
@@ -231,8 +231,8 @@ int RBTree<S,T>::active_delete_node(RBTreeNode<S, T> *target, RBTreeNode<S, T> *
 		vector = vector->get_left_child();
 		while (vector->get_right_child())
 			vector = vector->get_right_child();
-		target->key = vector->key;
-		target->data = vector->data;
+		target->_key = vector->_key;
+		target->_data = vector->_data;
 		return active_delete_node(vector, vparent, sibling);
 
 	}
@@ -241,23 +241,23 @@ int RBTree<S,T>::active_delete_node(RBTreeNode<S, T> *target, RBTreeNode<S, T> *
 		vector = vector->get_right_child();
 		while (vector->get_left_child())
 			vector = vector->get_left_child();
-		target->key = vector->key;
-		target->data = vector->data;
+		target->_key = vector->_key;
+		target->_data = vector->_data;
 		return active_delete_node(vector, vparent, sibling);
 	}
 	else
 	{
-		old_color = vector->color;
-		*vparent = vector->parent;
+		old_color = vector->_color;
+		*vparent = vector->_parent;
 		if (vector->get_parent()->get_left_child() == vector)
 		{
-			vector->parent->leftchild = NULL;
-			*sibling = vector->parent->rightchild;
+			vector->_parent->_leftchild = NULL;
+			*sibling = vector->_parent->_rightchild;
 		}
 		else
 		{
-			vector->parent->rightchild = NULL;
-			*sibling = vector->parent->leftchild;
+			vector->_parent->_rightchild = NULL;
+			*sibling = vector->_parent->_leftchild;
 		}
 		delete vector;
 		target = NULL;
@@ -285,21 +285,21 @@ void active_destructor(RBTreeNode<S, T> *vector)
 template <class S, class T>
 bool RBTree<S, T>::insert_node(S key, T data)
 {
-	RBTreeNode<S, T> *vector = root;
+	RBTreeNode<S, T> *vector = _root;
 
 	while (vector != NULL)
 	{
 		if (vector->get_key() > key)
 		{
-			if (vector->leftchild == NULL)
+			if (vector->_leftchild == NULL)
 				return rb_insert_process(vector->set_left_child(key, data));
-			vector = vector->leftchild;
+			vector = vector->_leftchild;
 		}
 		else
 		{
-			if (vector->rightchild == NULL)
+			if (vector->_rightchild == NULL)
 				return rb_insert_process(vector->set_right_child(key, data));
-			vector = vector->rightchild;
+			vector = vector->_rightchild;
 		}
 	}
 
@@ -315,7 +315,7 @@ void RBTree<S, T>::levelorder_print()
 	int current_depth;
 
 	vector = get_root();
-	current_depth = vector->depth = 1;
+	current_depth = vector->_depth = 1;
 	q.push(vector);
 
 	while (1)
@@ -326,22 +326,22 @@ void RBTree<S, T>::levelorder_print()
 		vector = q.front();
 		q.pop();
 
-		if (current_depth != vector->depth)
+		if (current_depth != vector->_depth)
 		{
-			current_depth = vector->depth;
+			current_depth = vector->_depth;
 			cout << endl;
 		}
-		cout << vector->key << "("<< vector->color<<")" << " : " << vector->data << "  ";
+		cout << vector->_key << "("<< vector->color<<")" << " : " << vector->_data << "  ";
 
-		if (vector->leftchild != NULL)
+		if (vector->_leftchild != NULL)
 		{
-			vector->leftchild->depth = vector->depth + 1;
+			vector->_leftchild->_depth = vector->_depth + 1;
 			q.push(vector->leftchild);
 		}
-		if (vector->rightchild != NULL)
+		if (vector->_rightchild != NULL)
 		{
-			vector->rightchild->depth = vector->depth + 1;
-			q.push(vector->rightchild);
+			vector->_rightchild->depth = vector->_depth + 1;
+			q.push(vector->_rightchild);
 		}
 	}
 }
@@ -352,23 +352,23 @@ bool RBTree<S, T>::rb_insert_process(RBTreeNode <S, T> *current)
 {
 	RBTreeNode <S, T> *parent,*gparent,*uncle;
 	
-	if (current == root)
-		current->color = black;
-	if (current->parent == root)
+	if (current == _root)
+		current->_color = black;
+	if (current->_parent == _root)
 		return true;
-	if (current->parent->color == black)
+	if (current->_parent->_color == black)
 		return true;
 
-	while(current!= root)
+	while(current!= _root)
 	{
-		if (current->parent == root)
+		if (current->_parent == _root)
 			return true;
-		parent = current->parent;
-		gparent = parent->parent;
-		if (gparent->leftchild == parent)
+		parent = current->_parent;
+		gparent = parent->_parent;
+		if (gparent->_leftchild == parent)
 		{
-			uncle = gparent->rightchild;
-			if (parent->leftchild == current)
+			uncle = gparent->_rightchild;
+			if (parent->_leftchild == current)
 			{
 				if (uncle == NULL)
 				{
@@ -405,15 +405,15 @@ bool RBTree<S, T>::rb_insert_process(RBTreeNode <S, T> *current)
 		}
 		else
 		{
-			uncle = gparent->leftchild;
-			if (parent->leftchild == current)
+			uncle = gparent->_leftchild;
+			if (parent->_leftchild == current)
 			{
 				if (uncle == NULL)
 				{
 					RLb_rotate(current);
 					return true;
 				}
-				else if (uncle->color == red)
+				else if (uncle->_color == red)
 				{
 					RLr_coloring(current);
 				}
@@ -430,7 +430,7 @@ bool RBTree<S, T>::rb_insert_process(RBTreeNode <S, T> *current)
 					RRb_rotate(current);
 					return true;
 				}
-				else if (uncle->color == red)
+				else if (uncle->_color == red)
 				{
 					RRr_coloring(current);
 				}
@@ -443,26 +443,26 @@ bool RBTree<S, T>::rb_insert_process(RBTreeNode <S, T> *current)
 		}
 		current = gparent;
 	}
-	current->color = black;
+	current->_color = black;
 }
 
 template <class S, class T>
 void RBTree<S, T>::delete_node(RBTreeNode<S, T> *target)
 {
-	RBTreeNode<S, T> *parent = target->parent, *successor, *sibling;
-	int old_color = target->color;
+	RBTreeNode<S, T> *parent = target->_parent, *successor, *sibling;
+	int old_color = target->_color;
 
 	if (active_delete_node(target, &parent, &sibling) == black)
 		rb_delete_process(parent, sibling);
-	root->color = black;
+	_root->_color = black;
 }
 
 template<class S, class T>
 inline bool RBTree<S, T>::LLr_coloring(RBTreeNode<S, T>* current)
 {
-	current->parent->parent->color = red;
-	current->parent->parent->leftchild->color = black;
-	current->parent->parent->rightchild->color = black;
+	current->_parent->_parent->_color = red;
+	current->_parent->_parent->_leftchild->_color = black;
+	current->_parent->_parent->_rightchild->_color = black;
 
 	return true;
 }
@@ -471,28 +471,28 @@ template<class S, class T>
 inline bool RBTree<S, T>::LLb_rotate(RBTreeNode<S, T>* current)
 {
 	RBTreeNode<S, T> *parent, *gparent, *uncle;
-	parent = current->parent;
-	gparent = parent->parent;
-	uncle = gparent->rightchild;
+	parent = current->_parent;
+	gparent = parent->_parent;
+	uncle = gparent->_rightchild;
 
 	gparent->set_right_child(gparent->key, gparent->data);
 	if (uncle != NULL)
 	{
-		gparent->rightchild->rightchild = uncle;
-		uncle->parent = gparent->rightchild;
+		gparent->_rightchild->_rightchild = uncle;
+		uncle->_parent = gparent->_rightchild;
 	}
-	gparent->rightchild->leftchild = parent->rightchild;
-	parent->rightchild = NULL;
-	if (gparent->rightchild->leftchild != NULL)
-		gparent->rightchild->leftchild->parent = gparent->rightchild;
+	gparent->_rightchild->_leftchild = parent->_rightchild;
+	parent->_rightchild = NULL;
+	if (gparent->_rightchild->_leftchild != NULL)
+		gparent->_rightchild->_leftchild->_parent = gparent->_rightchild;
 
 
-	gparent->key = parent->key;
-	gparent->data = parent->data;
+	gparent->_key = parent->_key;
+	gparent->_data = parent->_data;
 
-	gparent->leftchild = parent->leftchild;
-	if(parent->leftchild != NULL)
-		parent->leftchild->parent = gparent;
+	gparent->_leftchild = parent->_leftchild;
+	if(parent->_leftchild != NULL)
+		parent->_leftchild->_parent = gparent;
 	delete parent;
 
 	return true;
@@ -501,9 +501,9 @@ inline bool RBTree<S, T>::LLb_rotate(RBTreeNode<S, T>* current)
 template<class S, class T>
 inline bool RBTree<S, T>::LRr_coloring(RBTreeNode<S, T>* current)
 {
-	current->parent->parent->color = red;
-	current->parent->parent->leftchild->color = black;
-	current->parent->parent->rightchild->color = black;
+	current->_parent->_parent->_color = red;
+	current->_parent->_parent->_leftchild->_color = black;
+	current->_parent->_parent->_rightchild->_color = black;
 	return true;
 }
 
@@ -511,29 +511,29 @@ template<class S, class T>
 inline bool RBTree<S, T>::LRb_rotate(RBTreeNode<S, T>* current)
 {
 	RBTreeNode<S, T> *parent, *gparent, *uncle;
-	parent = current->parent;
-	gparent = parent->parent;
-	uncle = gparent->rightchild;
+	parent = current->_parent;
+	gparent = parent->_parent;
+	uncle = gparent->_rightchild;
 
-	gparent->set_right_child(gparent->key,gparent->data);
+	gparent->set_right_child(gparent->_key,gparent->_data);
 	if (uncle != NULL)
 	{
-		gparent->rightchild->rightchild = uncle;
-		uncle->parent = gparent->rightchild;
+		gparent->_rightchild->_rightchild = uncle;
+		uncle->_parent = gparent->_rightchild;
 	}
-	gparent->rightchild->leftchild = current->rightchild;
-	current->rightchild = NULL;
-	if (gparent->rightchild->leftchild != NULL)
+	gparent->_rightchild->_leftchild = current->_rightchild;
+	current->_rightchild = NULL;
+	if (gparent->_rightchild->_leftchild != NULL)
 	{
-		gparent->rightchild->leftchild->parent = gparent->rightchild;
+		gparent->_rightchild->_leftchild->_arent = gparent->_rightchild;
 	}
 
-	gparent->key = current->key;
-	gparent->data = current->data;
+	gparent->_key = current->_key;
+	gparent->_data = current->_data;
 
-	parent->rightchild = current->leftchild;
-	if(current->leftchild != NULL)
-		current->leftchild->parent = parent;
+	parent->_rightchild = current->_leftchild;
+	if(current->_leftchild != NULL)
+		current->_leftchild->_parent = parent;
 	delete current;
 
 	return true;
@@ -543,9 +543,9 @@ inline bool RBTree<S, T>::LRb_rotate(RBTreeNode<S, T>* current)
 template<class S, class T>
 inline bool RBTree<S, T>::RLr_coloring(RBTreeNode<S, T>* current)
 {
-	current->parent->parent->color = red;
-	current->parent->parent->leftchild->color = black;
-	current->parent->parent->rightchild->color = black;
+	current->_parent->_parent->_color = red;
+	current->_parent->_parent->_leftchild->_color = black;
+	current->_parent->_parent->_rightchild->_color = black;
 	return true;
 }
 
@@ -553,29 +553,29 @@ template<class S, class T>
 inline bool RBTree<S, T>::RLb_rotate(RBTreeNode<S, T>* current)
 {
 	RBTreeNode<S, T> *parent, *gparent, *uncle;
-	parent = current->parent;
-	gparent = parent->parent;
-	uncle = gparent->leftchild;
+	parent = current->_parent;
+	gparent = parent->_parent;
+	uncle = gparent->_leftchild;
 
 	gparent->set_left_child(gparent->key, gparent->data);
 	if (uncle != NULL)
 	{
-		gparent->leftchild->leftchild = uncle;
-		uncle->parent = gparent->leftchild;
+		gparent->_leftchild->_leftchild = uncle;
+		uncle->_parent = gparent->_leftchild;
 	}
-	gparent->leftchild->rightchild = current->leftchild;
-	current->leftchild = NULL;
-	if (gparent->leftchild->rightchild != NULL)
+	gparent->_leftchild->_rightchild = current->_leftchild;
+	current->_leftchild = NULL;
+	if (gparent->_leftchild->_rightchild != NULL)
 	{
-		gparent->leftchild->rightchild->parent = gparent->leftchild;
+		gparent->_leftchild->_rightchild->_parent = gparent->_leftchild;
 	}
 
-	gparent->key = current->key;
-	gparent->data = current->data;
+	gparent->_key = current->_key;
+	gparent->_data = current->_data;
 
-	parent->leftchild = current->rightchild;
-	if(current->rightchild != NULL)
-		current->rightchild->parent = parent;
+	parent->_leftchild = current->_rightchild;
+	if(current->_rightchild != NULL)
+		current->_rightchild->_parent = parent;
 	delete current;
 
 	return true;
@@ -585,9 +585,9 @@ inline bool RBTree<S, T>::RLb_rotate(RBTreeNode<S, T>* current)
 template<class S, class T>
 inline bool RBTree<S, T>::RRr_coloring(RBTreeNode<S, T>* current)
 {
-	current->parent->parent->color = red;
-	current->parent->parent->leftchild->color = black;
-	current->parent->parent->rightchild->color = black;
+	current->_parent->_parent->_color = red;
+	current->_parent->_parent->_leftchild->_color = black;
+	current->_parent->_parent->_rightchild->_color = black;
 	return true;
 }
 
@@ -595,29 +595,29 @@ template<class S, class T>
 inline bool RBTree<S, T>::RRb_rotate(RBTreeNode<S, T>* current)
 {
 	RBTreeNode<S, T> *parent, *gparent, *uncle;
-	parent = current->parent;
-	gparent = parent->parent;
-	uncle = gparent->leftchild;
+	parent = current->_parent;
+	gparent = parent->_parent;
+	uncle = gparent->_leftchild;
 
-	gparent->set_left_child(gparent->key, gparent->data);
+	gparent->set_left_child(gparent->_key, gparent->_data);
 	if (uncle != NULL)
 	{
-		gparent->leftchild->leftchild = uncle;
-		uncle->parent = gparent->leftchild;
+		gparent->_leftchild->_leftchild = uncle;
+		uncle->_parent = gparent->_leftchild;
 	}
-	gparent->leftchild->rightchild = parent->leftchild;
-	parent->leftchild = NULL;
-	if (gparent->leftchild->rightchild != NULL)
-		gparent->leftchild->rightchild->parent = gparent->leftchild;
+	gparent->_leftchild->_rightchild = parent->_leftchild;
+	parent->_leftchild = NULL;
+	if (gparent->_leftchild->_rightchild != NULL)
+		gparent->_leftchild->_rightchild->_parent = gparent->_leftchild;
 
 
-	gparent->key = parent->key;
-	gparent->data = parent->data;
+	gparent->_key = parent->_key;
+	gparent->_data = parent->_data;
 
 
-	gparent->rightchild = parent->rightchild;
-	if(parent->rightchild != NULL)
-		parent->rightchild->parent = gparent;
+	gparent->_rightchild = parent->_rightchild;
+	if(parent->_rightchild != NULL)
+		parent->_rightchild->_parent = gparent;
 	delete parent;
 
 	return true;
@@ -629,168 +629,168 @@ inline bool RBTree<S, T>::rb_delete_process(RBTreeNode<S, T> *parent, RBTreeNode
 	RBTreeNode<S, T> *temp;
 	if (parent == NULL)
 	{
-		root->color = black;
+		_root->_color = black;
 		return true;
 	}
 
 
-	if (sibling->color == red)
+	if (sibling->_color == red)
 	{
 
-		if (parent->rightchild == sibling)
+		if (parent->_rightchild == sibling)
 		{
-			parent->rightchild = sibling->leftchild;
-			if (sibling->leftchild != NULL)
-				sibling->leftchild->parent = parent;
+			parent->_rightchild = sibling->_leftchild;
+			if (sibling->_leftchild != NULL)
+				sibling->_leftchild->_parent = parent;
 
-			sibling->parent = parent->parent;
-			parent->parent = sibling;
-			sibling->leftchild = parent;
+			sibling->_parent = parent->_parent;
+			parent->_parent = sibling;
+			sibling->_leftchild = parent;
 		}
 		else
 		{
-			parent->leftchild = sibling->rightchild;
-			if (sibling->rightchild != NULL)
-				sibling->rightchild->parent = parent;
+			parent->_leftchild = sibling->_rightchild;
+			if (sibling->_rightchild != NULL)
+				sibling->_rightchild->_parent = parent;
 
-			sibling->parent = parent->parent;
-			parent->parent = sibling;
-			sibling->rightchild = parent;
+			sibling->_parent = parent->_parent;
+			parent->_parent = sibling;
+			sibling->_rightchild = parent;
 		}
 	}
 	else // black
 	{
-		if (parent->rightchild == sibling)
+		if (parent->_rightchild == sibling)
 		{
-			if (sibling->rightchild != NULL)
-				if (sibling->rightchild->color == red)
+			if (sibling->_rightchild != NULL)
+				if (sibling->_rightchild->_color == red)
 				{
 					// right right
-					sibling->rightchild->color = black;
-					if (parent->leftchild != NULL)
-						parent->leftchild->color = black;
+					sibling->_rightchild->_color = black;
+					if (parent->_leftchild != NULL)
+						parent->_leftchild->_color = black;
 
 
-					parent->set_left_child(parent->key, parent->data);
-					parent->leftchild->rightchild = sibling->leftchild;
-					if (sibling->leftchild != NULL)
-						sibling->leftchild->parent = parent->leftchild;
+					parent->set_left_child(parent->_key, parent->_data);
+					parent->_leftchild->_rightchild = sibling->_leftchild;
+					if (sibling->_leftchild != NULL)
+						sibling->_leftchild->_parent = parent->_leftchild;
 
-					parent->key = sibling->key;
-					parent->data = sibling->data;
+					parent->_key = sibling->_key;
+					parent->_data = sibling->_data;
 
-					parent->rightchild = sibling->rightchild;
-					if (sibling->rightchild != NULL)
-						sibling->rightchild->parent = parent;
+					parent->_rightchild = sibling->_rightchild;
+					if (sibling->_rightchild != NULL)
+						sibling->_rightchild->_parent = parent;
 					delete sibling;
 					return true;
 
 				}
-			if (sibling->leftchild != NULL)
-				if (sibling->leftchild->color == red)
+			if (sibling->_leftchild != NULL)
+				if (sibling->_leftchild->_color == red)
 				{
 
 					// right left
-					sibling->rightchild->color = black;
-					if (parent->leftchild != NULL)
-						parent->leftchild->color = black;
+					sibling->_rightchild->_color = black;
+					if (parent->_leftchild != NULL)
+						parent->_leftchild->_color = black;
 
-					parent->set_left_child(parent->key, parent->data);
-					parent->leftchild->rightchild = sibling->leftchild->leftchild;
-					if (sibling->leftchild->leftchild != NULL)
+					parent->set_left_child(parent->_key, parent->_data);
+					parent->_leftchild->_rightchild = sibling->_leftchild->_leftchild;
+					if (sibling->_leftchild->_leftchild != NULL)
 					{
-						sibling->leftchild->leftchild = parent->leftchild;
-						sibling->leftchild->leftchild = NULL;
+						sibling->_leftchild->_leftchild = parent->_leftchild;
+						sibling->_leftchild->_leftchild = NULL;
 					}
 
-					parent->key = sibling->leftchild->key;
-					parent->data = sibling->leftchild->data;
+					parent->_key = sibling->_leftchild->key;
+					parent->_data = sibling->_leftchild->data;
 
-					temp = sibling->leftchild;
-					sibling->leftchild = sibling->leftchild->rightchild;
-					sibling->leftchild->rightchild->parent = sibling;
+					temp = sibling->_leftchild;
+					sibling->_leftchild = sibling->_leftchild->_rightchild;
+					sibling->_leftchild->_rightchild->_parent = sibling;
 					delete temp;
 					return true;
 				}
-			if (parent->color == red)
+			if (parent->_color == red)
 			{
-				parent->color = black;
-				sibling->color = red;
+				parent->_color = black;
+				sibling->_color = red;
 			}
 			else
 			{
-				parent->color = double_black;
-				sibling->color = red;
+				parent->_color = double_black;
+				sibling->_color = red;
 
-				sibling = (parent->parent->leftchild == parent) ? parent->parent->rightchild : parent->parent->rightchild;
-				parent = parent->parent;
+				sibling = (parent->_parent->_leftchild == parent) ? parent->_parent->_rightchild : parent->_parent->_rightchild;
+				parent = parent->_parent;
 			}
 
 		}
 		else
 		{
-			if (sibling->leftchild != NULL)
-				if (sibling->leftchild->color == red)
+			if (sibling->_leftchild != NULL)
+				if (sibling->_leftchild->_color == red)
 				{
 					// left right
-					sibling->leftchild->color = black;
-					if (parent->rightchild != NULL)
-						parent->rightchild->color = black;
+					sibling->_leftchild->color = black;
+					if (parent->_rightchild != NULL)
+						parent->_rightchild->_color = black;
 
-					parent->set_right_child(parent->key, parent->data);
-					parent->rightchild->leftchild = sibling->rightchild->rightchild;
-					if (sibling->rightchild->rightchild != NULL)
+					parent->set_right_child(parent->_key, parent->_data);
+					parent->_rightchild->_leftchild = sibling->_rightchild->_rightchild;
+					if (sibling->_rightchild->_rightchild != NULL)
 					{
-						sibling->rightchild->rightchild = parent->rightchild;
-						sibling->rightchild->rightchild = NULL;
+						sibling->_rightchild->_rightchild = parent->_rightchild;
+						sibling->_rightchild->_rightchild = NULL;
 					}
 
-					parent->key = sibling->rightchild->key;
-					parent->data = sibling->rightchild->data;
+					parent->_key = sibling->_rightchild->_key;
+					parent->_data = sibling->_rightchild->_data;
 
-					temp = sibling->rightchild;
-					sibling->rightchild = sibling->rightchild->leftchild;
-					sibling->rightchild->leftchild->parent = sibling;
+					temp = sibling->_rightchild;
+					sibling->_rightchild = sibling->_rightchild->_leftchild;
+					sibling->_rightchild->_leftchild->_parent = sibling;
 					delete temp;
 					return true;
 				}
-			if (sibling->leftchild != NULL)
-				if (sibling->leftchild->color == red)
+			if (sibling->_leftchild != NULL)
+				if (sibling->_leftchild->_color == red)
 				{
 					// left left
-					sibling->leftchild->color = black;
-					if (parent->rightchild != NULL)
-						parent->rightchild->color = black;
+					sibling->_leftchild->_color = black;
+					if (parent->_rightchild != NULL)
+						parent->_rightchild->_color = black;
 
 
-					parent->set_right_child(parent->key, parent->data);
-					parent->rightchild->leftchild = sibling->rightchild;
-					if (sibling->rightchild != NULL)
-						sibling->rightchild->parent = parent->rightchild;
+					parent->set_right_child(parent->_key, parent->_data);
+					parent->_rightchild->_leftchild = sibling->_rightchild;
+					if (sibling->_rightchild != NULL)
+						sibling->_rightchild->_parent = parent->_rightchild;
 
-					parent->key = sibling->key;
-					parent->data = sibling->data;
+					parent->_key = sibling->_key;
+					parent->_data = sibling->_data;
 
-					parent->leftchild = sibling->leftchild;
-					if (sibling->leftchild != NULL)
-						sibling->leftchild->parent = parent;
+					parent->_leftchild = sibling->_leftchild;
+					if (sibling->_leftchild != NULL)
+						sibling->_leftchild->_parent = parent;
 					delete sibling;
 					return true;
 
 
 				}
-			if (parent->color == red)
+			if (parent->_color == red)
 			{
-				parent->color = black;
-				sibling->color = red;
+				parent->_color = black;
+				sibling->_color = red;
 			}
 			else
 			{
-				parent->color = double_black;
-				sibling->color = red;
+				parent->_color = double_black;
+				sibling->_color = red;
 
-				sibling = (parent->parent->leftchild == parent) ? parent->parent->rightchild : parent->parent->rightchild;
-				parent = parent->parent;
+				sibling = (parent->_parent->_leftchild == parent) ? parent->_parent->_rightchild : parent->_parent->_rightchild;
+				parent = parent->_parent;
 			}
 		}
 	}

@@ -2,12 +2,14 @@
 #include "../jigseon.common/llist.h"
 #include "../jigseon.common/HashTable.h"
 #include "../jigseon.common/Tree.h"
+#include "../jigseon.common/RBTree.h"
 using namespace jigseon;
 
 void test_list();
 void test_llist();
 void test_HashTable();
 void test_tree();
+void test_RBTree();
 
 int main()
 {
@@ -15,6 +17,10 @@ int main()
 	test_tree();
 }
 
+void test_RBTree()
+{
+	RBTree<int,int> tree;
+}
 void test_tree()
 {
 	Tree<int, int> tree;
