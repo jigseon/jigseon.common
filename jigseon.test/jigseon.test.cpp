@@ -14,12 +14,28 @@ void test_RBTree();
 int main()
 {
 //	test_list();
-	test_tree();
+	test_RBTree();
 }
 
 void test_RBTree()
 {
-	RBTree<int,int> tree;
+
+	jigseon::RBTree<int,int> tree;
+	tree.insert_node(5, 5);
+	tree.insert_node(6, 6);
+	tree.insert_node(7, 7);
+	tree.insert_node(1,1);
+	tree.insert_node(2, 2);
+	tree.insert_node(3, 3);
+
+	llist<RBTreeNode<int, int>*> l = tree.preorder_traverse();
+	tree.levelorder_print();
+	tree.delete_node(l[0]);
+	cout <<endl<<endl;
+	tree.levelorder_print();
+	tree.inorder_traverse();
+	tree.postorder_traverse();
+	cout << endl << tree.find(2)->get_data();
 }
 void test_tree()
 {
