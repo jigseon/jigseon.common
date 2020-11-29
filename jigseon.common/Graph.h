@@ -4,7 +4,7 @@
 #include <queue>
 #include <iostream>
 #include <string>
-#include "LinkedList.h"
+#include "llist.h"
 
 using namespace std;
 
@@ -22,15 +22,15 @@ template <class S, class T>struct Vertex;
 template <class S,class T>
 struct Edge
 {
-	struct Vertex<S,T> *from, *to;
-	int weight;
-	struct Edge *next;
-	int flag;
+	struct Vertex<S,T> *_from, *_to;
+	int _weight;
+	struct Edge * _next;
+	int _flag;
 
 	Edge()
 	{
-		to = from = NULL;
-		weight = 0;
+		_to = _from = NULL;
+		_weight = 0;
 		next = NULL;
 	}
 };
@@ -38,18 +38,18 @@ struct Edge
 template <class S, class T>
 struct AdjacentVertex
 {
-	S key;
-	struct Vertex<S,T> *from, *to;
-	int flag;
+	S _key;
+	struct Vertex<S,T> * _from, * _to;
+	int _flag;
 
 	struct AdjacentVertex *nextAdV;
 
 	AdjacentVertex()
 	{
-		flag = VERTEX_HEADER;
-		key = 0;
-		from = NULL;
-		to = NULL;
+		_flag = VERTEX_HEADER;
+		_key = 0;
+		_from = NULL;
+		_to = NULL;
 		nextAdV = NULL;
 	}
 
@@ -70,17 +70,17 @@ struct Vertex
 		key = 0;
 		data = 0;
 		flag = VERTEX_NORMAL;
-		adheader.flag = VERTEX_ADJACET;
-		adheader.from = NULL;
-		adheader.to = NULL;
-		adheader.key = 0;
-		adheader.nextAdV = NULL;
-		edheader.flag = EDGE_HEADER;
-		edheader.to = 0;
-		edheader.from = 0;
-		edheader.weight = 0;
-		edheader.next = 0;
-		weightsumfromtarget = MAX_WEIGHT;
+		adheader._flag = VERTEX_ADJACET;
+		adheader._from = NULL;
+		adheader._to = NULL;
+		adheader._key = 0;
+		adheader._nextAdV = NULL;
+		edheader._flag = EDGE_HEADER;
+		edheader._to = 0;
+		edheader._from = 0;
+		edheader._weight = 0;
+		edheader._next = 0;
+		_weightsumfromtarget = MAX_WEIGHT;
 	}
 };
 
@@ -88,8 +88,8 @@ template <class S,class T>
 class Graph
 {
 private:
-	Vertex<S,T> *Vertices;
-	int nr_vertices, capacity;
+	Vertex<S,T> * _vertices;
+	int _nr_vertices, _capacity;
 public:
 	Graph(int n);
 	int AddVertex(S key, T data);
@@ -107,22 +107,22 @@ public:
 template <class S,class T>
 Graph<S,T>::Graph(int n)
 {
-	Vertices = new Vertex<S, T>[n];
-	nr_vertices = 0;
-	capacity = n;
+	_vertices = new Vertex<S, T>[n];
+	_nr_vertices = 0;
+	_capacity = n;
 }
 
 template <class S, class T>
 int Graph<S,T>::AddVertex(S key, T data)
 {
-	if (this->nr_vertices + 1 > this->capacity)
+	if (this->_nr_vertices + 1 > this->_capacity)
 	{
 		cout << "Can not create vertex any more." << endl;
 		return 0;
 	}
-	this->Vertices[nr_vertices].key = key;
-	this->Vertices[nr_vertices].data = data;
-	nr_vertices++;
+	this->_vertices[_nr_vertices]._key = key;
+	this->_vertices[_nr_vertices]._data = data;
+	_nr_vertices++;
 
 	return 1;
 }
@@ -134,18 +134,18 @@ int Graph<S,T>::AddEdge(S fromkey, S tokey, int weight)
 	Edge<S, T>* evector = NULL;
 	Vertex<S, T> *from = NULL, *to = NULL;
 
-	for (int i = 0; i < this->nr_vertices; i++)
-		if (Vertices[i].key == fromkey)
+	for (int i = 0; i < this->_nr_vertices; i++)
+		if (_vertices[i].key == fromkey)
 		{
-			vector = &Vertices[i].adheader;
-			from = Vertices + i;
+			vector = &_vertices[i]._adheader;
+			from = _vertices + i;
 			break;
 		}
 
-	for (int i = 0; i < this->nr_vertices; i++)
-		if (Vertices[i].key == tokey)
+	for (int i = 0; i < this->_nr_vertices; i++)
+		if (_vertices[i].key == tokey)
 		{
-			to = Vertices + i;
+			to = _vertices + i;
 
 			break;
 		}
@@ -158,81 +158,81 @@ int Graph<S,T>::AddEdge(S fromkey, S tokey, int weight)
 	}
 
 
-	while (vector->nextAdV != NULL)
-		vector = vector->nextAdV;
+	while (vector->_nextAdV != NULL)
+		vector = vector->_nextAdV;
 
-	vector->nextAdV = new AdjacentVertex<S, T>;
-	vector->nextAdV->from = from;
-	vector->nextAdV->to = to;
-	vector->nextAdV->key = tokey;
-	vector->nextAdV->flag = VERTEX_ADJACET;
-	vector->nextAdV->nextAdV = NULL;
+	vector->_nextAdV = new AdjacentVertex<S, T>;
+	vector->_nextAdV->_from = from;
+	vector->_nextAdV->_to = to;
+	vector->_nextAdV->_key = tokey;
+	vector->_nextAdV->_flag = VERTEX_ADJACET;
+	vector->_nextAdV->_nextAdV = NULL;
 
-	evector = &from->edheader;
-	while (evector->next != NULL)
-		evector = evector->next;
-	evector->next = new Edge<S, T>;
-	evector->next->from = from;
-	evector->next->to = to;
-	evector->next->weight = weight;
-	evector->next->next = NULL;
-	evector->next->flag = EDGE_NORMAL;
+	evector = &from->_edheader;
+	while (evector->_next != NULL)
+		evector = evector->_next;
+	evector->_next = new Edge<S, T>;
+	evector->_next->_from = from;
+	evector->_next->_to = to;
+	evector->_next->_weight = weight;
+	evector->_next->_next = NULL;
+	evector->_next->_flag = EDGE_NORMAL;
 
 
 	return 1;
 }
 
 template <class S, class T>
-LinkedList<Vertex<S, T> *> Graph<S,T>::DFS()
+llist<Vertex<S, T> *> Graph<S,T>::DFS()
 {
 	LinkedList<Vertex<S, T>*> temp;
 
-	for (int i = 0; i < this->capacity; i++)
+	for (int i = 0; i < this->_capacity; i++)
 	{
-		Vertices[i].flag = VERTEX_NORMAL;
+		Vertices[i]._flag = VERTEX_NORMAL;
 	}
-	Active_DFS(Vertices,temp);
+	Active_DFS(_vertices,temp);
 	return temp;
 }
 
 template <class S, class T>
-int Active_DFS(Vertex<S, T> *Node, LinkedList<Vertex<S, T>*> &l)
+int Active_DFS(Vertex<S, T> *Node, llist<Vertex<S, T>*> &l)
 {
-	AdjacentVertex<S, T>* vector = &Node->adheader;
+	AdjacentVertex<S, T>* vector = &Node->_adheader;
 
-	Node->flag |= VERTEX_VISITED;
+	Node->_flag |= VERTEX_VISITED;
 	l.InsertTail(Node);
 
-	while (vector->nextAdV != NULL)
+	while (vector->_nextAdV != NULL)
 	{
-		if (!(vector->nextAdV->to->flag & VERTEX_VISITED))
-			Active_DFS(vector->nextAdV->to,l);
-		vector = vector->nextAdV;
+		if (!(vector->_nextAdV->_to->_flag & VERTEX_VISITED))
+			Active_DFS(vector->_nextAdV->_to,l);
+		vector = vector->_nextAdV;
 	}
 
 	return 0;
 }
 
 template <class S, class T>
-LinkedList<Vertex<S, T>*>  Graph<S,T>::WFS()
+llist<Vertex<S, T>*>  Graph<S,T>::WFS()
 {
 	LinkedList<Vertex<S, T>*> temp;
 
-	for (int i = 0; i < this->capacity; i++)
+	for (int i = 0; i < this->_capacity; i++)
 	{
-		Vertices[i].flag = VERTEX_NORMAL;
+		_vertices[i]._flag = VERTEX_NORMAL;
 	}
-	Active_WFS(Vertices,temp);
+	Active_WFS(_vertices,temp);
 	return temp;
 }
 
 template <class S, class T>
-int Active_WFS(Vertex<S, T>*Node, LinkedList<Vertex<S, T>*> &l)
+int Active_WFS(Vertex<S, T>*Node, llist<Vertex<S, T>*> &l)
 {
 	queue<Vertex<S, T>*> q;
 	AdjacentVertex<S,T> *vector;
 
-	Node->flag |= VERTEX_VISITED;
+	Node->_flag |= VERTEX_VISITED;
 	q.push(Node);
 
 	while (! q.empty())
@@ -241,15 +241,15 @@ int Active_WFS(Vertex<S, T>*Node, LinkedList<Vertex<S, T>*> &l)
 		q.pop();
 
 		l.InsertTail(Node);
-		vector = &Node->adheader;
-		while (vector->nextAdV != NULL)
+		vector = &Node->_adheader;
+		while (vector->_nextAdV != NULL)
 		{
-			if (!(vector->nextAdV->to->flag & VERTEX_VISITED))
+			if (!(vector->_nextAdV->_to->_flag & VERTEX_VISITED))
 			{
-				vector->nextAdV->to->flag |= VERTEX_VISITED;
-				q.push(vector->nextAdV->to);
+				vector->_nextAdV->_to->_flag |= VERTEX_VISITED;
+				q.push(vector->_nextAdV->_to);
 			}
-			vector = vector->nextAdV;
+			vector = vector->_nextAdV;
 		}
 	}
 	return 0;
@@ -259,13 +259,13 @@ int Active_WFS(Vertex<S, T>*Node, LinkedList<Vertex<S, T>*> &l)
 template <class S, class T>
 int Graph<S,T>::dikjstra()
 {
-	Vertex<S, T>*target = Vertices;
+	Vertex<S, T>*target = _vertices;
 
-	for (int i = 0; i < this->capacity; i++)
+	for (int i = 0; i < this->_capacity; i++)
 	{
-		Vertices[i].flag = VERTEX_NORMAL;
+		_vertices[i].flag = VERTEX_NORMAL;
 	}
-	target->weightsumfromtarget = 0;
+	target->_weightsumfromtarget = 0;
 	Active_dikjstra(target);
 	return 0;
 }
@@ -287,16 +287,16 @@ int Active_dikjstra(Vertex<S, T>*Node)
 		Node = q.front();
 		q.pop();
 
-		evector = Node->edheader.next;
+		evector = Node->_edheader._next;
 
 		while (evector != NULL)
 		{
-			if (evector->to->weightsumfromtarget > Node->weightsumfromtarget + evector->weight)
+			if (evector->_to->_weightsumfromtarget > Node->_weightsumfromtarget + evector->_weight)
 			{
-				evector->to->weightsumfromtarget = ((Node->weightsumfromtarget == MAX_WEIGHT) ? 0 : Node->weightsumfromtarget) + evector->weight;
-				q.push(evector->to);
+				evector->_to->_weightsumfromtarget = ((Node->_weightsumfromtarget == MAX_WEIGHT) ? 0 : Node->_weightsumfromtarget) + evector->_weight;
+				q.push(evector->_to);
 			}
-			evector = evector->next;
+			evector = evector->_next;
 		}
 
 
@@ -304,15 +304,15 @@ int Active_dikjstra(Vertex<S, T>*Node)
 
 
 
-		vector = &Node->adheader;
-		while (vector->nextAdV != NULL)
+		vector = &Node->_adheader;
+		while (vector->_nextAdV != NULL)
 		{
-			if (!(vector->nextAdV->to->flag & VERTEX_VISITED))
+			if (!(vector->_nextAdV->_to->_flag & VERTEX_VISITED))
 			{
-				vector->nextAdV->to->flag |= VERTEX_VISITED;
-				q.push(vector->nextAdV->to);
+				vector->_nextAdV->_to->_flag |= VERTEX_VISITED;
+				q.push(vector->_nextAdV->_to);
 			}
-			vector = vector->nextAdV;
+			vector = vector->_nextAdV;
 		}
 	}
 	return 0;
@@ -325,8 +325,8 @@ T& Graph<S, T>::operator[](S key)
 	auto l = this->WFS();
 	for (auto it = l.begin();it != l.end();it++)
 	{
-		if (it->data->key == key)
-			return it->data->data;
+		if (it->_data->_key == key)
+			return it->_data->_data;
 	}
 	throw InvalidIndexException(__LINE__,__FUNCTION__,__FILE__);
 }
