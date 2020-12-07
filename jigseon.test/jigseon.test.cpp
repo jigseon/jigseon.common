@@ -3,6 +3,7 @@
 #include "../jigseon.common/HashTable.h"
 #include "../jigseon.common/Tree.h"
 #include "../jigseon.common/RBTree.h"
+#include "../jigseon.common/Graph.h"
 using namespace jigseon;
 
 void test_list();
@@ -10,13 +11,41 @@ void test_llist();
 void test_HashTable();
 void test_tree();
 void test_RBTree();
+void test_graph();
 
 int main()
 {
 //	test_list();
-	test_RBTree();
+	test_graph();
 }
+void test_graph()
+{
+	Graph<int,int> gr(5);
+	gr.add_vertex(1,1);
+	gr.add_vertex(2, 2);
+	gr.add_vertex(3, 3);
+	gr.add_vertex(4, 4);
+	gr.add_vertex(5, 5);
+	gr.add_edge(1,2,3);
+	gr.add_edge(1, 3, 4);
+	gr.add_edge(2, 5, 4);
+	gr.add_edge(3, 4, 2);
+	gr.add_edge(4, 5, 10);
 
+	llist<Vertex<int,int>*> l = gr.DFS();
+	for (auto it = l.begin(); it != l.end();it++) {
+		cout << it->_data->_data <<","<< it->_data->_data << endl;
+	}
+
+	cout << endl << endl << endl;
+
+	llist<Vertex<int, int>*> l2 = gr.WFS();
+	for (auto it2 = l2.begin(); it2 != l.end(); it2++) {
+		cout << it2->_data->_data << "," << it2->_data->_data << endl;
+	}
+
+	gr.dijkstra();
+}
 void test_RBTree()
 {
 
