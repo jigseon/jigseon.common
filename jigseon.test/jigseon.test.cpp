@@ -4,6 +4,7 @@
 #include "../jigseon.common/Tree.h"
 #include "../jigseon.common/RBTree.h"
 #include "../jigseon.common/Graph.h"
+#include "../jigseon.common/BigNumber.h"
 using namespace jigseon;
 
 void test_list();
@@ -12,12 +13,37 @@ void test_HashTable();
 void test_tree();
 void test_RBTree();
 void test_graph();
+void test_BigInteger();
+
 
 int main()
 {
-//	test_list();
-	test_graph();
+
+	test_BigInteger();
 }
+
+void test_BigInteger()
+{
+	BigInteger b(1000000);
+	cout << b << endl;
+	b = b + 1000000000;
+	cout << b << endl;
+	b = b - "1000000000";
+	cout << b << endl;
+	b = b - "1000000000";
+	cout << b << endl;
+	b = b + "100000000000";
+	cout << b << endl;
+	b = b * 10;
+	cout << b << endl;
+	b = b * "10";
+	cout << b << endl;
+	b = b / "1000000000";
+	cout << b << endl;
+
+}
+
+
 void test_graph()
 {
 	Graph<int,int> gr(5);
