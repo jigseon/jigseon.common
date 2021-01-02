@@ -5,9 +5,10 @@
 #include "../jigseon.common/RBTree.h"
 #include "../jigseon.common/Graph.h"
 #include "../jigseon.common/BigNumber.h"
+#include "../jigseon.common/ExceptionClass.h"
 using namespace jigseon;
 
-void test_list();
+void TU_list();
 void test_llist();
 void test_HashTable();
 void test_tree();
@@ -18,8 +19,7 @@ void test_BigInteger();
 
 int main()
 {
-
-	test_BigInteger();
+	TU_list();
 }
 
 void test_BigInteger()
@@ -131,9 +131,33 @@ void test_HashTable()
 		cout << it->_key << it->_value << endl;
 	}
 }
-void test_list()
+void TU_list()
 {
+	//////////////////////////////////////////
+	// TU_list_01
 	list<int> a;
+	list<string> b("test");
+	list<double> c(15, 10);
+
+	if (a.count() != 0)
+		throw TEST("TU_list_01_1");
+
+	if(b.count() != 1 &&  b[0] !="test" )
+		throw TEST("TU_list_01_2");
+	
+	if (c.count() != 10)
+		throw TEST("TU_LIST_01_3");
+
+
+	double TU_list_01_3_res = 0;
+	for (int i = 0; i < 10;i++)
+		TU_list_01_3_res += c[i];
+
+	if(TU_list_01_3_res != 150)
+		throw TEST("TU_LIST_01_3");
+
+	//////////////////////////////////////////
+
 
 	try
 	{
