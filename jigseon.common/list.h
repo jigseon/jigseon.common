@@ -16,6 +16,7 @@ namespace jigseon
 	public:
 		list();
 		list(T data);
+		list(T data,unsigned int elements);
 		list(const list& cls);
 		virtual ~list();
 
@@ -42,9 +43,17 @@ namespace jigseon
 			iterator(T* current, bool dir = forward) { _currentP = current; _direction = dir; }
 
 			void operator++() { _currentP = (_direction == forward) ? _currentP + 1 : _currentP - 1; }
-			void operator++(int none) { _currentP = (_direction == forward) ? _currentP + 1 : _currentP - 1; }
+			void operator++(int none) 
+			{ 
+				UNREFERENCED_PARAMETER(none);
+				_currentP = (_direction == forward) ? _currentP + 1 : _currentP - 1; 
+			}
 			void operator--() { (_direction == forward) ? _currentP - 1 : _currentP + 1; }
-			void operator--(int none) { _currentP = (_direction == forward) ? _currentP - 1 : _currentP + 1; }
+			void operator--(int none) 
+			{ 
+				UNREFERENCED_PARAMETER(none);
+				_currentP = (_direction == forward) ? _currentP - 1 : _currentP + 1; 
+			}
 			bool operator==(iterator i) { return (this->_currentP == i._currentP) ? true : false; }
 			bool operator!=(iterator i) { return (this->_currentP != i._currentP) ? true : false; }
 			T& operator*() { return *_currentP; }
@@ -88,6 +97,27 @@ namespace jigseon
 		return;
 	}
 
+	template <class T>
+	list<T>::list(_In_ T data,unsigned int elements)
+	{
+		_consecutive = new T(data);
+		if (nullptr == _consecutive)
+			throw BADALLOC;
+
+
+		_nr_list_nodes = 1;
+		_allocated_elements = 1;
+
+		for (unsigned int i = 1; i < elements;i++)
+		{
+			this->append(data);
+		}
+
+
+		return;
+	}
+
+
 	///	@brief
 	template <class T>
 	list<T>::list(_In_ const list<T>& cls) // 복사 생성자
@@ -113,13 +143,13 @@ namespace jigseon
 	template <class T>
 	size_t list<T>::resize(size_t nextsize)
 	{
-		size_t needsize, currentsize = this->_nr_list_nodes;
+		size_t needsize;
 		T* tempbuf = this->_consecutive;
 
 		needsize = (nextsize >> 3) + (nextsize < 9 ? 3 : 6);
 		this->_consecutive = new T[needsize + nextsize];
 		if (this->_allocated_elements > 0)
-			copy_n(tempbuf, needsize + nextsize, _consecutive);
+			std::copy_n(tempbuf, needsize + nextsize, _consecutive);
 		delete tempbuf;
 
 		this->_allocated_elements = needsize + nextsize;
@@ -210,5 +240,12 @@ namespace jigseon
 		delete _consecutive;
 		_consecutive = nullptr;
 	}
+
+	template <class T>
+	T& list<T>::operator[](int index)
+	{
+		return this->_consecutive[index];
+	}
+
 }
 

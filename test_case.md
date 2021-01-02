@@ -1,4 +1,4 @@
-| Test Case ID | Test Case Scenario | Test Steps                                                   | Test Data | Expected Results | Actual Results | Pass/Fail |
-| ------------ | ------------------ | ------------------------------------------------------------ | --------- | ---------------- | -------------- | --------- |
-| TU_list_01   | 객체 생성          | 1. default<br />2. one element<br />3. fixed size with one value<br />4. fixed size with sequential value<br />5. copy constructor |           |                  |                |           |
-| TU__llist_01 | 객체 생성          | 1. default<br />2. one element<br />3. fixed size with one value<br />4. fixed size with sequential value<br />5. copy constructor |           |                  |                |           |
+| Test Case ID | Test Case Scenario | Test Steps                                                   | Test Data | Expected Results | Actual Results | Pass/Fail     |
+| ------------ | ------------------ | ------------------------------------------------------------ | --------- | ---------------- | -------------- | ------------- |
+| TU_list_1    | 객체 생성          | 1. default<br />2. one element<br />3. fixed size with one value<br />4. copy constructor |           |                  |                | P(2021.01.03) |
+| TU__llist_1  | 객체 생성          | 1. default<br />2. one element<br />3. fixed size with one value<br />4. copy constructor |           |                  |                |               |

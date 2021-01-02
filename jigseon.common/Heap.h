@@ -28,11 +28,11 @@ namespace jigseon
 	{
 	private:
 		HeapNode<T>* _heap;
-		int _count, _capacity;
+		size_t _count, _capacity;
 		int _mode;
 
 	public:
-		Heap(int n = 100, int mode = minimum);
+		Heap(size_t n = 100, int mode = minimum);
 		void swap(HeapNode<T>*, HeapNode<T>*);
 		bool enqueue(int key, T data);
 		HeapNode<T> dequeue();
@@ -63,7 +63,7 @@ namespace jigseon
 
 	};
 	template <class T>
-	Heap<T>::Heap(int n, int mode)
+	Heap<T>::Heap(size_t n, int mode)
 	{
 		this->_heap = new HeapNode<T>[n];
 		if (this->_heap == NULL) throw BADALLOC;
@@ -89,7 +89,7 @@ namespace jigseon
 		if (_capacity <= _count)
 			return false;
 
-		int current = _count;
+		size_t current = _count;
 
 		_heap[current]._key = key;
 		_heap[current]._data = data;
@@ -121,17 +121,6 @@ namespace jigseon
 		return true;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
 	template <class T>
 	HeapNode<T> Heap<T>::dequeue()
 	{
@@ -141,7 +130,7 @@ namespace jigseon
 		if (_count <= 0)
 			return HeapNode<T>();
 
-		swap(_heap, _heap + (_count - 1));
+		swap(_heap, _heap + (_count - (unsigned long long)1));
 
 		res = _heap[_count - 1];
 		_heap[_count - 1]._status = absent;

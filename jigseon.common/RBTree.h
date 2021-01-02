@@ -21,9 +21,9 @@ namespace jigseon
 		RBTreeNode * _leftchild, * _rightchild, * _parent;
 
 	public:
-		RBTreeNode() { _key = S(); _data = T(); _color = red; _leftchild = _rightchild = _parent = NULL; }
-		RBTreeNode(S k, T d) { _key = k; _data = d; _color = red; _leftchild = _rightchild = _parent = NULL; }
-		RBTreeNode(const RBTreeNode &t) { this->_key = t._key; this->_data = t._data; this->_color = red; this->_leftchild = t._leftchild; this->_rightchild = t._rightchild; this->_parent = t._parent; }
+		RBTreeNode() { _depth = 0; _key = S(); _data = T(); _color = red; _leftchild = _rightchild = _parent = NULL; }
+		RBTreeNode(S k, T d) { _depth = 1; _key = k; _data = d; _color = red; _leftchild = _rightchild = _parent = NULL; }
+		RBTreeNode(const RBTreeNode& t) { _depth = t._depth; this->_key = t._key; this->_data = t._data; this->_color = red; this->_leftchild = t._leftchild; this->_rightchild = t._rightchild; this->_parent = t._parent; }
 
 		RBTreeNode *get_left_child() { return _leftchild; }
 		RBTreeNode *get_right_child() { return _rightchild; }
@@ -222,7 +222,7 @@ namespace jigseon
 	template <class S, class T>
 	int RBTree<S,T>::active_delete_node(RBTreeNode<S, T> *target, RBTreeNode<S, T> **vparent, RBTreeNode<S, T> **sibling)
 	{
-		RBTreeNode<S, T> *vector = target, *parent = target->_parent;
+		RBTreeNode<S, T> *vector = target;
 		int old_color;
 
 
@@ -444,13 +444,13 @@ namespace jigseon
 			current = gparent;
 		}
 		current->_color = black;
+		return true;
 	}
 
 	template <class S, class T>
 	void RBTree<S, T>::delete_node(RBTreeNode<S, T> *target)
 	{
-		RBTreeNode<S, T> *parent = target->_parent, *successor, *sibling;
-		int old_color = target->_color;
+		RBTreeNode<S, T> *parent = target->_parent, *sibling;
 
 		if (active_delete_node(target, &parent, &sibling) == black)
 			rb_delete_process(parent, sibling);
@@ -794,7 +794,7 @@ namespace jigseon
 				}
 			}
 		}
-
+		return true;
 	}
 
 }

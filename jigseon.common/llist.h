@@ -424,8 +424,7 @@ namespace jigseon
 
 	///	@brief
 	template <class T>
-	T&
-		llist<T>::operator[](int index)
+	T&	llist<T>::operator[](int index)
 	{
 		if (index >= this->_nr_llist_nodes || -index > static_cast<int>(this->_nr_llist_nodes))
 		{

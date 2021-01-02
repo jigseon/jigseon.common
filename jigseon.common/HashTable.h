@@ -89,9 +89,17 @@ namespace jigseon
 			iterator(HashTable<T>* ht, int current_index, bool dir = forward) { this->_ht = ht; this->_current_index = current_index; this->_direction = dir; }
 
 			void operator++() { _current_index = (_direction == forward) ? _current_index + 1 : _current_index - 1; }
-			void operator++(int none) { _current_index = (_direction == forward) ? _current_index + 1 : _current_index - 1; }
+			void operator++(int none) 
+			{
+				UNREFERENCED_PARAMETER(none);
+				_current_index = (_direction == forward) ? _current_index + 1 : _current_index - 1; 
+			}
 			void operator--() { (_direction == forward) ? _current_index - 1 : _current_index + 1; }
-			void operator--(int none) { _current_index = (_direction == forward) ? _current_index - 1 : _current_index + 1; }
+			void operator--(int none) 
+			{ 
+				UNREFERENCED_PARAMETER(none);
+				_current_index = (_direction == forward) ? _current_index - 1 : _current_index + 1; 
+			}
 			bool operator==(iterator i) { return (_current_index == i._current_index) ? true : false; }  
 			bool operator!=(iterator i) 
 			{ 
@@ -253,5 +261,6 @@ namespace jigseon
 				index -= this->_table[i]._count;
 			}
 		}
+		throw InvalidIndexException(__LINE__, __FUNCTION__, __FILE__);
 	}
 }

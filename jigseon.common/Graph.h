@@ -14,6 +14,7 @@ namespace jigseon
 #define VERTEX_NORMAL 1
 #define VERTEX_ADJACET 2
 #define VERTEX_VISITED 4
+#define EDGE_UNKNOWN -1;
 #define EDGE_HEADER 0
 #define EDGE_NORMAL 0
 #define EDGE_VISITED 1
@@ -31,6 +32,7 @@ namespace jigseon
 
 		Edge()
 		{
+			this->_flag = EDGE_UNKNOWN;
 			_to = _from = NULL;
 			_weight = 0;
 			_next = NULL;

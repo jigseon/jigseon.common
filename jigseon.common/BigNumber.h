@@ -5,7 +5,6 @@
 #include <regex>
 #include "llist.h"
 #include "ExceptionClass.h"
-using namespace std;
 
 
 namespace jigseon
@@ -15,7 +14,7 @@ namespace jigseon
 
 	class BigInteger
 	{
-		string _data;
+		std::string _data;
 		bool _sign;
 		friend BigInteger Add(const BigInteger &, int);
 		friend BigInteger Add(const BigInteger &, const BigInteger &);
@@ -38,47 +37,47 @@ namespace jigseon
 		BigInteger();
 		BigInteger(int);
 		BigInteger(const BigInteger &); // 변경되지 않을 레퍼런스들은 반드시 const 하자
-		BigInteger(string str);
+		BigInteger(std::string str);
 		~BigInteger();
 		void operator=(int);
 		void operator=(const BigInteger &); // const가 너무 중요했다..
-		void operator=(string);
+		void operator=(std::string);
 		BigInteger operator+(int) const;
 		BigInteger operator+(const BigInteger &) const;
-		BigInteger operator+(string) const;
+		BigInteger operator+(std::string) const;
 		BigInteger operator-(int) const;
 		BigInteger operator-(const BigInteger &) const;
-		BigInteger operator-(string) const;
+		BigInteger operator-(std::string) const;
 		BigInteger operator*(int) const;
 		BigInteger operator*(const BigInteger &) const;
-		BigInteger operator*(string) const;
+		BigInteger operator*(std::string) const;
 		BigInteger operator/(int) const;
 		BigInteger operator/(const BigInteger &) const;
-		BigInteger operator/(string)const;
+		BigInteger operator/(std::string)const;
 
 		bool operator<(int) const; // this를 const -> 멤버변수 전체를 const
 		bool operator<(const BigInteger &) const;
-		bool operator<(string) const;
+		bool operator<(std::string) const;
 		bool operator>(int) const;
 		bool operator>(const BigInteger &) const;
-		bool operator>(string) const;
+		bool operator>(std::string) const;
 		bool operator<=(int) const;
 		bool operator<=(const BigInteger &) const;
-		bool operator<=(string) const;
+		bool operator<=(std::string) const;
 		bool operator>=(int) const;
 		bool operator>=(const BigInteger &) const;
-		bool operator>=(string) const;
+		bool operator>=(std::string) const;
 		bool operator==(int) const;
 		bool operator==(const BigInteger &) const;
-		bool operator==(string) const;
+		bool operator==(std::string) const;
 		bool operator!=(int) const;
 		bool operator!=(const BigInteger &) const;
-		bool operator!=(string) const;
+		bool operator!=(std::string) const;
 
 		bool GetSign() const { return this->_sign; }
 		void Negative() { this->_sign = (this->_sign)?false:true; }
 
-		friend ostream & operator <<(ostream &, BigInteger &);
+		friend std::ostream & operator <<(std::ostream &, BigInteger &);
 
 		friend BigInteger operator+(int, const BigInteger &);
 		friend BigInteger operator-(int, const BigInteger &);
@@ -93,7 +92,7 @@ namespace jigseon
 
 	};
 
-	ostream & operator<<(ostream &os, BigInteger &b)
+	std::ostream & operator<<(std::ostream &os, BigInteger &b)
 	{
 		if (b._sign)
 			os << b._data;
@@ -113,16 +112,16 @@ namespace jigseon
 	{
 		if (data >= 0)
 		{
-			this->_data = to_string(data);
+			this->_data = std::to_string(data);
 			this->_sign = true;
 		}
 		else
 		{
-			this->_data = to_string(-data);
+			this->_data = std::to_string(-data);
 			this->_sign = false;
 		}
 	}
-	BigInteger::BigInteger(string str)
+	BigInteger::BigInteger(std::string str)
 	{
 
 		if (str[0] == '-')
@@ -139,7 +138,7 @@ namespace jigseon
 	}
 	BigInteger::BigInteger(const BigInteger &b)
 	{
-		this->_data = string(b._data);
+		this->_data = std::string(b._data);
 		this->_sign = b._sign;
 	}
 
@@ -167,8 +166,6 @@ namespace jigseon
 		auto longer_end = (bdata1._data.length() < bdata2._data.length()) ? bdata2._data.rend() : bdata1._data.rend();
 		auto shorter_end = (bdata1._data.length() < bdata2._data.length()) ? bdata1._data.rend() : bdata2._data.rend();
 		btemp._sign = bdata1._sign;
-
-		int res = 0;
 
 		for (; carry != 0 || longer != longer_end;)
 		{
@@ -211,7 +208,7 @@ namespace jigseon
 		auto shorter_end = (bdata1._data.length() < bdata2._data.length()) ? bdata1._data.rend() : bdata2._data.rend();
 
 
-		int res = 0, carry = 0;
+		int carry = 0;
 
 		for (; carry != 0 || longer != longer_end;)
 		{
@@ -257,7 +254,7 @@ namespace jigseon
 		auto shorter_end = (bdata1._data.length() < bdata2._data.length()) ? bdata1._data.rend() : bdata2._data.rend();
 
 
-		int res = 0, carry = 0;
+		int carry = 0;
 
 		for (; carry != 0 || longer != longer_end;)
 		{
@@ -304,7 +301,7 @@ namespace jigseon
 		auto shorter_end = (bdata1._data.length() < bdata2._data.length()) ? bdata1._data.rend() : bdata2._data.rend();
 
 
-		int res = 0, carry = 0;
+		int carry = 0;
 
 		for (; carry != 0 || longer != longer_end;)
 		{
@@ -551,23 +548,23 @@ namespace jigseon
 	{
 		if (data >= 0)
 		{
-			this->_data = to_string(data);
+			this->_data = std::to_string(data);
 			this->_sign = true;
 		}
 		else
 		{
-			this->_data = to_string(-data);
+			this->_data = std::to_string(-data);
 			this->_sign = false;
 		}
 	}
 
 	void BigInteger::operator=(const BigInteger &b)
 	{
-		this->_data = string(b._data);
+		this->_data = std::string(b._data);
 		this->_sign = b._sign;
 	}
 
-	void BigInteger::operator=(string str)
+	void BigInteger::operator=(std::string str)
 	{
 		if (str[0] == '-')
 		{
@@ -612,7 +609,7 @@ namespace jigseon
 			throw BIGINTEGER;
 	}
 
-	BigInteger BigInteger::operator+(string str) const
+	BigInteger BigInteger::operator+(std::string str) const
 	{
 		BigInteger bdata = str;
 
@@ -657,7 +654,7 @@ namespace jigseon
 			throw BIGINTEGER;
 	}
 
-	BigInteger BigInteger::operator-(string str) const
+	BigInteger BigInteger::operator-(std::string str) const
 	{
 		BigInteger bdata = str;
 
@@ -681,7 +678,7 @@ namespace jigseon
 	{
 		return this->LessThan(bdata);
 	}
-	bool BigInteger::operator<(string str) const
+	bool BigInteger::operator<(std::string str) const
 	{
 		return this->LessThan(BigInteger(str));
 	}
@@ -694,7 +691,7 @@ namespace jigseon
 		return this->GreaterThan(bdata);
 	}
 
-	bool BigInteger::operator>(string str) const
+	bool BigInteger::operator>(std::string str) const
 	{
 		return this->GreaterThan(BigInteger(str));
 	}
@@ -707,7 +704,7 @@ namespace jigseon
 	{
 		return this->LessThan(bdata) || this->EqualWith(bdata);
 	}
-	bool BigInteger::operator<=(string str) const
+	bool BigInteger::operator<=(std::string str) const
 	{
 		return this->LessThan(BigInteger(str)) || this->EqualWith(BigInteger(str));
 	}
@@ -720,9 +717,9 @@ namespace jigseon
 	{
 		return this->GreaterThan(bdata) || this->EqualWith(bdata);
 	}
-	bool BigInteger::operator>=(string str) const
+	bool BigInteger::operator>=(std::string str) const
 	{
-		return this->GreaterThan(string(str)) || this->EqualWith(string(str));
+		return this->GreaterThan(std::string(str)) || this->EqualWith(std::string(str));
 	}
 	bool BigInteger::operator==(int data) const
 	{
@@ -732,7 +729,7 @@ namespace jigseon
 	{
 		return this->EqualWith(bdata);
 	}
-	bool BigInteger::operator==(string str) const
+	bool BigInteger::operator==(std::string str) const
 	{
 		return this->EqualWith(BigInteger(str));
 	}
@@ -745,7 +742,7 @@ namespace jigseon
 	{
 		return ! this->EqualWith(bdata);
 	}
-	bool BigInteger::operator!=(string str) const
+	bool BigInteger::operator!=(std::string str) const
 	{
 		return !this->EqualWith(BigInteger(str));
 	}
@@ -760,7 +757,7 @@ namespace jigseon
 	{
 		return Multiply(*this, bdata);
 	}
-	BigInteger BigInteger::operator*(string str) const
+	BigInteger BigInteger::operator*(std::string str) const
 	{
 		BigInteger bdata = str;
 		return Multiply(*this, bdata);
@@ -774,7 +771,7 @@ namespace jigseon
 	{
 		return Divide(*this, bdata);
 	}
-	BigInteger BigInteger::operator/(string str) const
+	BigInteger BigInteger::operator/(std::string str) const
 	{
 		BigInteger bdata = str;
 		return Divide(*this, bdata);
@@ -802,11 +799,12 @@ namespace jigseon
 		BigInteger b = data;
 		return b / bdata;
 	}
+	/*
 	void operator>(int data, const BigInteger &bdata) {}
 	void operator>=(int data, const BigInteger &bdata) {}
 	void operator<(int data, const BigInteger &bdata) {}
 	void operator<=(int data, const BigInteger &bdata) {}
 	void operator==(int data, const BigInteger &bdata) {}
 	void operator!=(int data, const BigInteger &bdata) {}
-
+	*/
 }
