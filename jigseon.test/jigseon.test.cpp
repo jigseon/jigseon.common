@@ -167,10 +167,7 @@ void TU_list()
 	if(TU_list_01_3_res != 150)
 		throw TEST("TU_LIST_01_3");
 
-	double* temp1 = &c[0];
-	double* temp2 = &d[0];
-
-	if (d.count() != 10 || &d[0] == &d[0])
+	if (d.count() != 10 || &d[0] == &c[0])
 		throw TEST("TU_LIST_01_4");
 
 	double TU_list_01_4_res = 0;
