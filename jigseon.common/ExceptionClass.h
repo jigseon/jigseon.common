@@ -69,6 +69,6 @@ namespace jigseon
 		std::string _test_id;
 	public:
 		TestException(int line, std::string function, std::string file, std::string test_id, std::string type = "TestException") : ExceptionBase(line, function, file, type) { _test_id = test_id; }
-		void print() { std::cout << _type << " : " << _function << "in " << _file << "(line:" << _line << ")" << std::endl; }
+		void print() { std::cout << _type << "("<<_test_id<<")" << " : " << _function << " in " << _file << "(line:" << _line << ")" << std::endl; }
 	};
 }

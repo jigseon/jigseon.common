@@ -19,7 +19,17 @@ void test_BigInteger();
 
 int main()
 {
-	TU_list();
+	try
+	{
+		TU_list();
+	}
+	catch(TestException e)
+	{
+		e.print();
+		exit(1);
+	}
+
+	
 }
 
 void test_BigInteger()
@@ -138,11 +148,12 @@ void TU_list()
 	list<int> a;
 	list<string> b("test");
 	list<double> c(15, 10);
+	list<double> d = c;
 
 	if (a.count() != 0)
 		throw TEST("TU_list_01_1");
 
-	if(b.count() != 1 &&  b[0] !="test" )
+	if(b.count() != 1 ||  b[0] !="test" )
 		throw TEST("TU_list_01_2");
 	
 	if (c.count() != 10)
@@ -155,6 +166,19 @@ void TU_list()
 
 	if(TU_list_01_3_res != 150)
 		throw TEST("TU_LIST_01_3");
+
+	double* temp1 = &c[0];
+	double* temp2 = &d[0];
+
+	if (d.count() != 10 || &d[0] == &d[0])
+		throw TEST("TU_LIST_01_4");
+
+	double TU_list_01_4_res = 0;
+	for (int i = 0; i < 10; i++)
+		TU_list_01_4_res += d[i];
+
+	if (TU_list_01_4_res != 150)
+		throw TEST("TU_LIST_01_4");
 
 	//////////////////////////////////////////
 
