@@ -9,7 +9,7 @@
 using namespace jigseon;
 
 void TU_list();
-void test_llist();
+void TU_llist();
 void test_HashTable();
 void test_tree();
 void test_RBTree();
@@ -22,6 +22,7 @@ int main()
 	try
 	{
 		TU_list();
+		TU_llist();
 	}
 	catch(TestException e)
 	{
@@ -157,7 +158,7 @@ void TU_list()
 		throw TEST("TU_list_01_2");
 	
 	if (c.count() != 10)
-		throw TEST("TU_LIST_01_3");
+		throw TEST("TU_list_01_3");
 
 
 	double TU_list_01_3_res = 0;
@@ -165,17 +166,17 @@ void TU_list()
 		TU_list_01_3_res += c[i];
 
 	if(TU_list_01_3_res != 150)
-		throw TEST("TU_LIST_01_3");
+		throw TEST("TU_list_01_3");
 
 	if (d.count() != 10 || &d[0] == &c[0])
-		throw TEST("TU_LIST_01_4");
+		throw TEST("TU_list_01_4");
 
 	double TU_list_01_4_res = 0;
 	for (int i = 0; i < 10; i++)
 		TU_list_01_4_res += d[i];
 
 	if (TU_list_01_4_res != 150)
-		throw TEST("TU_LIST_01_4");
+		throw TEST("TU_list_01_4");
 
 	//////////////////////////////////////////
 
@@ -224,79 +225,44 @@ void TU_list()
 
 
 }
-void test_llist()
+void TU_llist()
 {
+	//////////////////////////////////////////
+	// TU_llist_01
 	llist<int> a;
+	llist<string> b("test");
+	llist<double> c(15, 10);
+	llist<double> d = c;
 
-	try
-	{
-		a.append(52351);
-		a.append(123412);
-		a.append(124124);
-		a.append(4);
-		a.append(124);
-		a.append(41234);
-		a.append(3);
-		a.append(124);
-		a.append(134);
-		a.append(1);
-		a.append(7);
-		a.append(5);
-		a.append(1243);
-		a.append(7);
 
-	}
-	catch (BadAllocException e)
-	{
-		e.print();
-		exit(1);
-	}
-	//a.Delete((llist_node<int> *)0x41234123424);
-	auto it = a.begin();
-	for (; it != a.end(); it++)
-	{
-		cout << it->_data << endl;
-	}
-	cout << "===============================================" << endl;
-	a.remove(5);
+	if (a.count() != 0)
+		throw TEST("TU_llist_01_1");
 
-	for (int i = 0; i < 6; i++)
-	{
-		cout << a[i] << endl;
-	}
-	cout << "===============================================" << endl;
-	a[4] = 10000;
+	if (b.count() != 1 || b[0] != "test")
+		throw TEST("TU_llist_01_2");
 
-	for (int i = 0; i < 6; i++)
-	{
-		cout << a[i] << endl;
-	}
-	cout << "===============================================" << endl;
-	llist<int> b;
-	b.append(-1);
-	b.append(-2);
-	b.append(-3);
-	b.append(-4);
+	if (c.count() != 10)
+		throw TEST("TU_lliST_01_3");
 
-	a.extend(b);
-	it = a.begin();
-	for (; it != a.end(); it++)
-	{
-		cout << it->_data << endl;
-	}
-	cout << "===============================================" << endl;
-	a.sort();
-	it = a.begin();
-	for (; it != a.end(); it++)
-	{
-		cout << it->_data << endl;
-	}
-	cout << "===============================================" << endl;
-	a.reverse();
-	it = a.begin();
-	for (; it != a.end(); it++)
-	{
-		cout << it->_data << endl;
-	}
+
+	double TU_llist_01_3_res = 0;
+	for (int i = 0; i < 10; i++)
+		TU_llist_01_3_res += c[i];
+
+	if (TU_llist_01_3_res != 150)
+		throw TEST("TU_llist_01_3");
+
+	if (d.count() != 10 || &d[0] == &c[0])
+		throw TEST("TU_llist_01_4");
+
+	double TU_list_01_4_res = 0;
+	for (int i = 0; i < 10; i++)
+		TU_list_01_4_res += d[i];
+
+	if (TU_list_01_4_res != 150)
+		throw TEST("TU_llist_01_4");
+
+	//////////////////////////////////////////
+
 }
 

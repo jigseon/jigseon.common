@@ -30,6 +30,7 @@ namespace jigseon
 	public:
 		llist();
 		llist(T data);
+		llist(T data,unsigned int elements);
 		llist(const llist& cls);
 		virtual ~llist();
 
@@ -141,6 +142,25 @@ namespace jigseon
 		_head->_prev = nullptr;
 		_tail = _head;
 
+		return;
+	}
+
+	///	@brief
+	template <class T>
+	llist<T>::llist(_In_ T data,unsigned int elements)
+	{
+		_head = new llist_node<T>(data);
+		if (nullptr == _head)
+			throw BADALLOC;
+
+		_nr_llist_nodes = 1;
+		_head->_next = nullptr;
+		_head->_prev = nullptr;
+		_tail = _head;
+		elements--;
+
+		while (elements--)
+			this->append(data);
 		return;
 	}
 
