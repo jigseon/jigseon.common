@@ -33,6 +33,9 @@ namespace jigseon
 		void sort();
 		void clear();
 
+		size_t nr_list_nodes() { return this->_nr_list_nodes; }
+		size_t allocated_elements() { return this->_allocated_elements; }
+
 	public:
 		class iterator
 		{
@@ -187,7 +190,7 @@ namespace jigseon
 		{
 			if (tempbuf[i] == data)
 			{
-				copy_n(tempbuf + i + 1, _allocated_elements - i, _consecutive + i);
+				std::copy_n(tempbuf + i + 1, _allocated_elements - i, _consecutive + i);
 				--_nr_list_nodes;
 				--_allocated_elements;
 				return;
@@ -247,5 +250,10 @@ namespace jigseon
 		return this->_consecutive[index];
 	}
 
+
+
+
 }
+
+
 
