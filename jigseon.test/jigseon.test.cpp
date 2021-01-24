@@ -317,6 +317,66 @@ void TU_llist()
 		throw TEST("TU_llist_01_4");
 
 	//////////////////////////////////////////
+	//////////////////////////////////////////
+	// TU_llist_02
 
+	list<int> TU_llist_02;
+	int TU_llist_02_sum = 0;
+	for (int i = 1; i <= 73; i++)
+	{
+		TU_llist_02.append(i);
+	}
+
+	if (TU_llist_02.count() != 73)
+		throw TEST("TU_llist_02");
+	for (int i = 0; i < TU_llist_02.count(); i++)
+	{
+		TU_llist_02_sum += TU_llist_02[i];
+	}
+	if (TU_llist_02_sum != 2701)
+		throw TEST("TU_llist_02");
+
+	TU_llist_02.remove(10);
+	TU_llist_02.remove(20); 
+	TU_llist_02.remove(30); 
+	TU_llist_02.remove(40);
+	TU_llist_02.remove(50);
+
+	TU_llist_02.append(10); 
+	TU_llist_02.append(-10);
+	TU_llist_02.append(10); 
+	TU_llist_02.append(-10); 
+	TU_llist_02.append(10); 
+	TU_llist_02.append(-10); 
+	TU_llist_02.append(10); 
+	TU_llist_02.append(-10); 
+	TU_llist_02.append(10); 
+	TU_llist_02.append(-10); 
+	TU_llist_02.append(50); 
+	TU_llist_02.append(40); 
+	TU_llist_02.append(30); 
+	TU_llist_02.append(20); 
+	TU_llist_02.append(10); 
+	TU_llist_02.append(10); 
+
+	TU_llist_02_sum = 0;
+
+	if (TU_llist_02.count() != 84)
+		throw TEST("TU_llist_02");
+	for (int i = 0; i < TU_llist_02.count(); i++)
+	{
+		TU_llist_02_sum += TU_llist_02[i];
+	}
+	if (TU_llist_02_sum != 2711)
+		throw TEST("TU_list_02");
+
+
+
+
+
+
+
+
+	//////////////////////////////////////////
 }
 
