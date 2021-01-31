@@ -257,27 +257,28 @@ void TU_list()
 		e.print();
 		exit(1);
 	}
+	cout << a.allocated_elements() << endl;
+	cout << a.nr_list_nodes() << endl;
+	cout << "===========================" << endl;
 	auto it = a.begin();
 	for (int i =0 ; it != a.end();i++, it++)
 	{
 		cout <<i<<". "<< *it << endl;
 	}
-	cout << "------------------------------" << endl;
-	a.sort();
-	it = a.begin();
-	for (int i = 0; it != a.end(); i++, it++)
-	{
-		cout << i << ". " << *it << endl;
-	}
-	cout << "------------------------------" << endl;
-	a.reverse();
-	it = a.begin();
-	for (int i = 0; it != a.end(); i++, it++)
-	{
-		cout << i << ". " << *it << endl;
-	}
+	a.insert(55555, 5);
+	a.insert(66666, 6);
+	a.insert(77777, 7);
+	auto it2 = a.begin();
 
-
+	cout << endl << endl << endl;
+	cout << a.allocated_elements() << endl;
+	cout << a.nr_list_nodes() << endl;
+	cout << "===========================" << endl;
+	for (int i = 0; it2 != a.end(); i++, it2++)
+	{
+		cout << i << ". " << *it2 << endl;
+	}
+	cout << "===========================" << endl;
 }
 void TU_llist()
 {

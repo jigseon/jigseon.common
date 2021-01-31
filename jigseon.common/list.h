@@ -32,6 +32,7 @@ namespace jigseon
 		void reverse();
 		void sort();
 		void clear();
+		void insert(T,int);
 
 		size_t nr_list_nodes() { return this->_nr_list_nodes; }
 		size_t allocated_elements() { return this->_allocated_elements; }
@@ -250,8 +251,17 @@ namespace jigseon
 		return this->_consecutive[index];
 	}
 
-
-
+	template <class T>
+	void list<T>::insert(T data, int index)
+	{
+		this->append(data);
+		for (int i=index;i<this->_nr_list_nodes ;i++)
+		{
+			T temp = data;
+			data = (*this)[i];
+			(*this)[i] = temp;
+		}
+	}
 
 }
 
