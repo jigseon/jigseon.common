@@ -254,6 +254,7 @@ namespace jigseon
 	template <class T>
 	void list<T>::insert(T data, int index)
 	{
+
 		this->append(data);
 		for (int i=index;i<this->_nr_list_nodes ;i++)
 		{
