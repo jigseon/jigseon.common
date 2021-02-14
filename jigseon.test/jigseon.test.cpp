@@ -12,11 +12,6 @@ using namespace jigseon;
 
 
 void TU_llist();
-void test_HashTable();
-void test_tree();
-void test_RBTree();
-void test_graph();
-void test_BigInteger();
 
 
 int main()
