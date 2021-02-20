@@ -32,7 +32,7 @@ namespace jigseon
 		void reverse();
 		void sort();
 		void clear();
-		void insert(T,int);
+		void insert(T data, int index);
 
 		size_t nr_list_nodes() { return this->_nr_list_nodes; }
 		size_t allocated_elements() { return this->_allocated_elements; }
@@ -201,7 +201,7 @@ namespace jigseon
 				_consecutive[i] = tempbuf[i];
 			}
 		}
-		throw INVALIDINPUT;
+		throw INVALIDINDEX;
 	}
 
 
@@ -248,12 +248,43 @@ namespace jigseon
 	template <class T>
 	T& list<T>::operator[](int index)
 	{
+		if (index >= 0)
+		{
+			if(index >= this->_nr_list_nodes)
+			{
+				throw INVALIDINDEX;
+			}
+		}
+		else
+		{
+			if (static_cast<int>(this->_nr_list_nodes) + index >= static_cast<int>(this->_nr_list_nodes))
+			{
+				throw INVALIDINDEX;
+			}
+			index += this->_nr_list_nodes;
+		}
+
 		return this->_consecutive[index];
 	}
 
 	template <class T>
 	void list<T>::insert(T data, int index)
 	{
+		if (index >= 0)
+		{
+			if (index > this->_nr_list_nodes)
+			{
+				throw INVALIDINDEX;
+			}
+		}
+		else
+		{
+			if (static_cast<int>(this->_nr_list_nodes) + index > static_cast<int>(this->_nr_list_nodes))
+			{
+				throw INVALIDINDEX;
+			}
+			index += this->_nr_list_nodes;
+		}
 
 		this->append(data);
 		for (int i=index;i<this->_nr_list_nodes ;i++)

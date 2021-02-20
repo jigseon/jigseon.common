@@ -259,7 +259,7 @@ namespace jigseon
 
 		if (index < 0)
 		{
-			throw INVALIDINPUT;
+			throw INVALIDINDEX;
 		}
 
 		if (nullptr == _head || 0 == index)
@@ -446,12 +446,23 @@ namespace jigseon
 	template <class T>
 	T&	llist<T>::operator[](int index)
 	{
-		if (index >= this->_nr_llist_nodes || -index > static_cast<int>(this->_nr_llist_nodes))
+		if (index >= 0)
 		{
-			throw INVALIDINPUT;
+			if (index >= this->_nr_llist_nodes)
+			{
+				throw INVALIDINDEX;
+			}
+		}
+		else
+		{
+			if (static_cast<int>(this->_nr_llist_nodes) + index >= static_cast<int>(this->_nr_llist_nodes))
+			{
+				throw INVALIDINDEX;
+			}
+			index += this->_nr_llist_nodes;
 		}
 
-		auto it = (index >= 0) ? this->begin() : this->rbegin();
+		auto it = this->begin();
 
 		for (int i = 0; i < index; ++i)
 			it++;

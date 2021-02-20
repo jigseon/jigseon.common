@@ -6,6 +6,7 @@ TU_list::TU_list()
 	TU_list_01();
 	TU_list_02();
 	TU_list_03();
+	TU_list_04();
 }
 
 void TU_list::TU_list_01()
@@ -162,3 +163,45 @@ void TU_list::TU_list_03()
 		throw TEST("TU_list_03");
 
 }
+
+
+void TU_list::TU_list_04()
+{
+	list<int> TU_list_04;
+	int TU_list_04_sum=0;
+
+	for (int i = 0; i < 100;i++)
+	{
+		TU_list_04.append(i + 1);
+	}
+
+	if(TU_list_04[-1] != TU_list_04[99] || TU_list_04[-100] != TU_list_04[0])
+		throw TEST("TU_list_04");
+
+	for (int i = -1;i>=-100;i--)
+	{
+		TU_list_04_sum += TU_list_04[i];
+	}
+
+	if(TU_list_04_sum != 5050)
+		throw TEST("TU_list_04");
+
+
+	TU_list_04.insert(101, -100);
+	TU_list_04.insert(102, -50);
+	TU_list_04.insert(103,-1); // 102개인 상태에서 101 번 자리에
+
+	if(TU_list_04[0] != 101 || TU_list_04[51] != 102 || TU_list_04[101] != 103)
+		throw TEST("TU_list_04");
+
+
+	TU_list_04_sum = 0;
+	for (int i = -1; i >= -103; i--)
+	{
+		TU_list_04_sum += TU_list_04[i];
+	}
+
+	if (TU_list_04_sum != 5356)
+		throw TEST("TU_list_04");
+}
+
