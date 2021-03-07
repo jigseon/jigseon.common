@@ -21,9 +21,15 @@
     <ClCompile Include="TU_list.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TU_llist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TU_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TU_llist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

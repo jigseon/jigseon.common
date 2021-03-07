@@ -91,6 +91,8 @@ namespace jigseon
 		void remove(T value);
 		void reverse();
 		void sort();
+		void insert(T data, int index);
+
 
 	private:
 		size_t _nr_llist_nodes;
@@ -254,7 +256,6 @@ namespace jigseon
 	bool
 		llist<T>::InsertAt(_In_ uint32_t index, _In_ const T& data)
 	{
-		_nr_llist_nodes++;
 		llist_node<T>* temp = _head;
 
 		if (index < 0)
@@ -533,6 +534,15 @@ namespace jigseon
 		{
 			it->_data = minheap.dequeue()._data;
 		}
+	}
+
+
+
+	///	@brief
+	template <class T>
+	void llist<T>::insert(T data, int index)
+	{
+		this->InsertAt(index,data);
 	}
 }
 

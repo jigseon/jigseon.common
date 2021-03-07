@@ -161,9 +161,11 @@
   <ItemGroup>
     <ClCompile Include="jigseon.test.cpp" />
     <ClCompile Include="TU_list.cpp" />
+    <ClCompile Include="TU_llist.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TU_list.h" />
+    <ClInclude Include="TU_llist.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
