@@ -7,6 +7,7 @@ TU_list::TU_list()
 	TU_list_02();
 	TU_list_03();
 	TU_list_04();
+	TU_list_05();
 }
 
 void TU_list::TU_list_01()
@@ -205,3 +206,21 @@ void TU_list::TU_list_04()
 		throw TEST("TU_list_04");
 }
 
+void TU_list::TU_list_05() 
+{
+	list<int> TU_list_05(10,50);
+	int sum = 0;
+
+	list<int>::iterator it = TU_list_05.begin();
+	TU_list_05.append(10);
+
+	for (; it != TU_list_05.end(); it++)
+	{
+		sum += *it;
+	}
+
+	if(TU_list_05.count() != 51)
+		throw TEST("TU_list_05");
+	if(sum != 510)
+		throw TEST("TU_list_05");
+}
