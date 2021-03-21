@@ -6,7 +6,7 @@ TU_llist::TU_llist()
 	TU_llist_01();
 	TU_llist_02();
 	TU_llist_03();
-
+	TU_llist_04();
 }
 
 void TU_llist::TU_llist_01()
@@ -151,4 +151,46 @@ void TU_llist::TU_llist_03()
 	}
 	if (TU_llist_03_sum != 2711)
 		throw TEST("TU_llist_03");
+}
+
+void TU_llist::TU_llist_04()
+{
+
+	llist<int> TU_llist_04;
+	int TU_llist_04_sum = 0;
+
+	for (int i = 0; i < 100; i++)
+	{
+		TU_llist_04.append(i + 1);
+	}
+
+	if (TU_llist_04[-1] != TU_llist_04[99] || TU_llist_04[-100] != TU_llist_04[0])
+		throw TEST("TU_llist_04");
+
+	for (int i = -1; i >= -100; i--)
+	{
+		TU_llist_04_sum += TU_llist_04[i];
+	}
+
+	if (TU_llist_04_sum != 5050)
+		throw TEST("TU_llist_04");
+
+
+	TU_llist_04.insert(101, -100);
+	TU_llist_04.insert(102, -50);
+	TU_llist_04.insert(103, -1);
+
+	if (TU_llist_04[0] != 101 || TU_llist_04[51] != 102 || TU_llist_04[101] != 103)
+		throw TEST("TU_llist_04");
+
+
+	TU_llist_04_sum = 0;
+	for (int i = -1; i >= -103; i--)
+	{
+		TU_llist_04_sum += TU_llist_04[i];
+	}
+
+	if (TU_llist_04_sum != 5356)
+		throw TEST("TU_llist_04");
+
 }

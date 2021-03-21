@@ -37,7 +37,7 @@ namespace jigseon
 	public:
 		bool InsertHead(_In_ const T& data);
 		bool InsertTail(_In_ const T& data);
-		bool InsertAt(_In_ uint32_t index, _In_ const T& data);
+		bool InsertAt(_In_ int index, _In_ const T& data);
 
 		bool Delete(_In_ llist_node<T>* node);
 		bool DeleteHead();
@@ -254,14 +254,29 @@ namespace jigseon
 	///	@brief
 	template <class T>
 	bool
-		llist<T>::InsertAt(_In_ uint32_t index, _In_ const T& data)
+		llist<T>::InsertAt(_In_ int index, _In_ const T& data)
 	{
 		llist_node<T>* temp = _head;
 
-		if (index < 0)
+
+		if (index >= 0)
 		{
-			throw INVALIDINDEX;
+			if (index > this->_nr_llist_nodes)
+			{
+				throw INVALIDINDEX;
+			}
 		}
+		else
+		{
+			if (static_cast<int>(this->_nr_llist_nodes) + index >= static_cast<int>(this->_nr_llist_nodes))
+			{
+				throw INVALIDINDEX;
+			}
+			index += this->_nr_llist_nodes;
+		}
+
+
+
 
 		if (nullptr == _head || 0 == index)
 		{
@@ -287,6 +302,7 @@ namespace jigseon
 			newllist_node->_next->_prev = newllist_node;
 			temp->_next = newllist_node;
 			newllist_node->_prev = temp;
+			this->_nr_llist_nodes++;
 			return true;
 		}
 	}
@@ -395,8 +411,21 @@ namespace jigseon
 	{
 		if (_nr_llist_nodes == 0)
 			return false;
-		if (index < 0)
-			return false;
+		if (index >= 0)
+		{
+			if (index >= this->_nr_llist_nodes)
+			{
+				throw INVALIDINDEX;
+			}
+		}
+		else
+		{
+			if (static_cast<int>(this->_nr_llist_nodes) + index >= static_cast<int>(this->_nr_llist_nodes))
+			{
+				throw INVALIDINDEX;
+			}
+			index += this->_nr_llist_nodes;
+		}
 
 
 		_nr_llist_nodes--;
