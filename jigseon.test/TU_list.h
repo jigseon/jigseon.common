@@ -2,6 +2,8 @@
 
 #include "../jigseon.common/list.h"
 #include "../jigseon.common/ExceptionClass.h"
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 
@@ -10,11 +12,12 @@ using namespace std;
 
 class TU_list
 {
-	void TU_list_01();
-	void TU_list_02();
-	void TU_list_03();
-	void TU_list_04();
-	void TU_list_05();
+	void TU_list_1();
+	void TU_list_2();
+	void TU_list_3();
+	void TU_list_4();
+	void TU_list_5();
+	void TU_list_6();
 public:
 	TU_list();
 };

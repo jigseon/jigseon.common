@@ -10,10 +10,10 @@ using namespace std;
 
 class TU_llist
 {
-	void TU_llist_01();
-	void TU_llist_02();
-	void TU_llist_03();
-	void TU_llist_04();
+	void TU_llist_1();
+	void TU_llist_2();
+	void TU_llist_3();
+	void TU_llist_4();
 public:
 	TU_llist();
 };
