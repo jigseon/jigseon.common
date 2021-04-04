@@ -9,6 +9,7 @@ TU_list::TU_list()
 	TU_list_4();
 	TU_list_5();
 	TU_list_6();
+	TU_list_7();
 }
 
 void TU_list::TU_list_1()
@@ -254,4 +255,32 @@ void TU_list::TU_list_6()
 		if (TU_list_6.count() != initial_count_value + inserts - removes)
 			throw TEST("TU_list_6");
 	}
+
+
+
+}
+
+void TU_list::TU_list_7()
+{
+	list<int> TU_list_7_1;
+
+	for (int i =1;i<=10;i++)
+	{
+		TU_list_7_1.append(i);
+	}
+
+	list<int> TU_list_7_2 = TU_list_7_1.copy();
+
+	if (TU_list_7_1.allocated_elements() != TU_list_7_2.allocated_elements())
+		throw TEST("TU_list_7");
+	if (TU_list_7_1.nr_list_nodes() != TU_list_7_2.nr_list_nodes())
+		throw TEST("TU_list_7");
+	for (int i = 0; i < 10; i++)
+	{
+		if (TU_list_7_1[i] != TU_list_7_2[i])
+			throw TEST("TU_list_7");
+	}
+	
+	if(&TU_list_7_1[0] == &TU_list_7_2[0])
+		throw TEST("TU_list_7");
 }

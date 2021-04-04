@@ -173,7 +173,10 @@ namespace jigseon
 
 	///	@brief
 	template <class T>
-	list<T>& list<T>::copy();
+	list<T>& list<T>::copy()
+	{
+		return *new list<T>(*this);
+	}
 
 	///	@brief
 	template <class T>

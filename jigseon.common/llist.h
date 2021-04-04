@@ -505,7 +505,7 @@ namespace jigseon
 	llist<T>&
 		llist<T>::copy()
 	{
-		return new llist<T>(*this);
+		return *new llist<T>(*this);
 	}
 
 	///	@brief
