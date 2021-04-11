@@ -10,6 +10,7 @@ TU_list::TU_list()
 	TU_list_5();
 	TU_list_6();
 	TU_list_7();
+	TU_list_8();
 }
 
 void TU_list::TU_list_1()
@@ -283,4 +284,24 @@ void TU_list::TU_list_7()
 	
 	if(&TU_list_7_1[0] == &TU_list_7_2[0])
 		throw TEST("TU_list_7");
+}
+
+void TU_list::TU_list_8()
+{
+	list<int> TU_list_8_1(5,5), TU_list_8_2(10,10);
+	int sum=0;
+
+	TU_list_8_1.extend(TU_list_8_2);
+	if (TU_list_8_1.count() != 15)
+		throw TEST("TU_list_8");
+
+	auto it = TU_list_8_1.begin();
+	for (;it!=TU_list_8_1.end();it++)
+	{
+		sum += *it;
+	}
+
+	if (sum != 25+100)
+		throw TEST("TU_list_8");
+
 }

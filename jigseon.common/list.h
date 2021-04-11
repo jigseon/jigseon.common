@@ -27,7 +27,7 @@ namespace jigseon
 		void append(T n);
 		list<T>& copy();
 		size_t count() const { return this->_nr_list_nodes; }
-		void extend(const list<T> l);
+		void extend(list<T> &l);
 		void remove(T);
 		void reverse();
 		void sort();
@@ -180,8 +180,16 @@ namespace jigseon
 
 	///	@brief
 	template <class T>
-	void list<T>::extend(const list<T> l);
+	void list<T>::extend(list<T> &l)
+	{
+		l.begin();
+		auto it = l.begin();
+		for (;it!=l.end();it++)
+		{
+			this->append(*it);
+		}
 
+	}
 
 	///	@brief
 	template <class T>

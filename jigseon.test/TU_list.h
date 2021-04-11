@@ -19,6 +19,7 @@ class TU_list
 	void TU_list_5();
 	void TU_list_6();
 	void TU_list_7();
+	void TU_list_8();
 public:
 	TU_list();
 };
