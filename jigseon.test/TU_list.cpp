@@ -11,6 +11,7 @@ TU_list::TU_list()
 	TU_list_6();
 	TU_list_7();
 	TU_list_8();
+	TU_list_9();
 }
 
 void TU_list::TU_list_1()
@@ -303,5 +304,25 @@ void TU_list::TU_list_8()
 
 	if (sum != 25+100)
 		throw TEST("TU_list_8");
+
+}
+void TU_list::TU_list_9()
+{
+	list<int> TU_list_9(5, 10);
+
+	if (TU_list_9.count() != 10)
+		throw TEST("TU_list_9");
+
+	TU_list_9.clear();
+
+	if (TU_list_9.count() != 0)
+		throw TEST("TU_list_9");
+	if (TU_list_9.allocated_elements() != 0)
+		throw TEST("TU_list_9");
+
+	TU_list_9.append(10);
+	TU_list_9.append(11);
+	if (TU_list_9.count() != 2)
+		throw TEST("TU_list_9");
 
 }
