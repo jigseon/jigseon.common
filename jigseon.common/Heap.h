@@ -6,7 +6,7 @@
 namespace jigseon
 {
 	enum mode { minimum, maximum };
-	enum status { present, absent };
+	enum status { absent, present  };
 
 	template <class T>
 	struct HeapNode
@@ -19,7 +19,7 @@ namespace jigseon
 		{
 			this->_key = key;
 			this->_data = data;
-			this->_status = present;
+			this->_status = absent;
 		}
 	};
 
@@ -97,7 +97,7 @@ namespace jigseon
 
 		_count++;
 
-		while (_heap[current]._status != absent && current >= 0)
+		while (_heap[current]._status != absent && current > 0 && _count>1)
 		{
 
 			if (this->_mode == minimum)
@@ -141,14 +141,14 @@ namespace jigseon
 		{
 			if (this->_mode == minimum)
 			{
-				successor = (_heap[current * 2 + 1]._key < _heap[current * 2 + 2]._key) ? current * 2 + 1 : current * 2 + 2;
+				successor = (_heap[current * 2 + 1]._key < _heap[current * 2 + 2]._key || _heap[current * 2 + 2]._status == absent) ? current * 2 + 1 : current * 2 + 2;
 
 				if (_heap[current]._key >= _heap[successor]._key && _heap[successor]._status != absent)
 				{
 					if (successor >= _count)
 						return res;
 					swap(_heap + current, _heap + successor);
-					current = current * 2 + 1;
+					current = successor;
 
 				}
 				else
@@ -156,14 +156,14 @@ namespace jigseon
 			}
 			else
 			{
-				successor = (_heap[current * 2 + 1]._key > _heap[current * 2 + 2]._key) ? current * 2 + 1 : current * 2 + 2;
+				successor = (_heap[current * 2 + 1]._key > _heap[current * 2 + 2]._key || _heap[current * 2 + 2]._status == absent) ? current * 2 + 1 : current * 2 + 2;
 
 				if (_heap[current]._key <= _heap[successor]._key && _heap[successor]._status != absent)
 				{
 					if (successor >= _count)
 						return res;
 					swap(_heap + current, _heap + successor);
-					current = current * 2 + 1;
+					current = successor;
 				}
 				else
 					return res;

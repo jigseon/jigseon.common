@@ -12,6 +12,7 @@ TU_list::TU_list()
 	TU_list_7();
 	TU_list_8();
 	TU_list_9();
+	TU_list_10();
 }
 
 void TU_list::TU_list_1()
@@ -326,3 +327,44 @@ void TU_list::TU_list_9()
 		throw TEST("TU_list_9");
 
 }
+
+
+
+void TU_list::TU_list_10() 
+{
+	list<int> TU_list_10_1;
+	int test_elements = 100;
+	int test_executions = 100;
+
+	srand(time(NULL));
+	for (int i = 1; i <= test_elements; i++)
+	{
+		TU_list_10_1.append(rand() % 1000 - 499);
+	}
+
+	list<int> TU_list_10_2(TU_list_10_1);
+	TU_list_10_1.sort();
+
+	for (int test=1;test<= test_executions;test++)
+	{
+		for (int i = 0; i < test_elements-1; i++)
+		{
+			int a= TU_list_10_1[i],b= TU_list_10_1[i + 1];
+			if (a >b )
+			{
+				cout << "Error"<<test<<" case : ";
+				for (int j = 0; j < test_elements; j++)
+				{
+					cout << TU_list_10_2[j] << ", ";
+				}
+				cout << endl << "Current Result : " << endl;
+				for (int j = 0; j < test_elements; j++)
+				{
+					cout << "\t" << TU_list_10_1[j] << endl;
+				}
+				throw TEST("TU_list_10");
+			}
+		}
+	}
+}
+
