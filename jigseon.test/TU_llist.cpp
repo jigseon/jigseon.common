@@ -6,7 +6,7 @@ TU_llist::TU_llist()
 	TU_llist_1();
 	TU_llist_2();
 	TU_llist_3();
-	TU_llist_4();
+	//TU_llist_4();
 	TU_llist_5();
 }
 
@@ -224,5 +224,5 @@ void TU_llist::TU_llist_5()
 			throw TEST("TU_llist_5");
 	}
 
-	cout << TU_llist_5.count();
+	//cout << TU_llist_5.count();
 }
