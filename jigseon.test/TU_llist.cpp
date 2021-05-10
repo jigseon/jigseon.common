@@ -7,6 +7,7 @@ TU_llist::TU_llist()
 	TU_llist_2();
 	TU_llist_3();
 	TU_llist_4();
+	TU_llist_5();
 }
 
 void TU_llist::TU_llist_1()
@@ -193,4 +194,35 @@ void TU_llist::TU_llist_4()
 	if (TU_llist_4_sum != 5356)
 		throw TEST("TU_llist_4");
 
+}
+
+
+void TU_llist::TU_llist_5()
+{
+	llist<int> TU_llist_5(10, 50);
+	int inserts, removes;
+	size_t initial_count_value;
+
+	srand(time(NULL));
+	for (int i = 0; i < 10; i++)
+	{
+		initial_count_value = TU_llist_5.count();
+		inserts = rand() % 100 + 1;
+		removes = rand() % inserts + 1;
+
+		for (int cv_insert = 0; cv_insert < inserts; cv_insert++)
+		{
+			TU_llist_5.append(10);
+		}
+
+		for (int cv_remove = 0; cv_remove < removes; cv_remove++)
+		{
+			TU_llist_5.remove(10);
+		}
+
+		if (TU_llist_5.count() != initial_count_value + inserts - removes)
+			throw TEST("TU_llist_5");
+	}
+
+	cout << TU_llist_5.count();
 }

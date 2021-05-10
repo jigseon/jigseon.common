@@ -139,6 +139,9 @@ namespace jigseon
 
 		while (current <= _count - 1)
 		{
+			if (current * 2 + 2 > this->_capacity)
+				return res;
+
 			if (this->_mode == minimum)
 			{
 				successor = (_heap[current * 2 + 1]._key < _heap[current * 2 + 2]._key || _heap[current * 2 + 2]._status == absent) ? current * 2 + 1 : current * 2 + 2;

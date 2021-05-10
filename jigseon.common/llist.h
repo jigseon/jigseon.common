@@ -287,7 +287,7 @@ namespace jigseon
 		{
 			for (uint32_t i = 0; i <= index - 1; ++i)
 			{
-				if (nullptr == temp->_next) // 목표에 도달하지 못하였는데 널이라면..
+				if (nullptr == temp->_next)
 				{
 					InsertTail(data);
 					return true;
@@ -299,7 +299,8 @@ namespace jigseon
 			if (nullptr == _head) 
 				throw BADALLOC;
 			newllist_node->_next = temp->_next;
-			newllist_node->_next->_prev = newllist_node;
+			if(newllist_node->_next != NULL)
+				newllist_node->_next->_prev = newllist_node;
 			temp->_next = newllist_node;
 			newllist_node->_prev = temp;
 			this->_nr_llist_nodes++;
