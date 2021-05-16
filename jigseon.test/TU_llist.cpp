@@ -8,6 +8,7 @@ TU_llist::TU_llist()
 	TU_llist_3();
 	TU_llist_4();
 	TU_llist_5();
+	TU_llist_6();
 }
 
 void TU_llist::TU_llist_1()
@@ -224,4 +225,27 @@ void TU_llist::TU_llist_5()
 		if (TU_llist_5.count() != initial_count_value + inserts - removes)
 			throw TEST("TU_llist_5");
 	}
+}
+
+void TU_llist::TU_llist_6()
+{
+	llist<int> TU_llist_6_1;
+
+	for (int i = 1; i <= 10; i++)
+	{
+		TU_llist_6_1.append(i);
+	}
+
+	llist<int> TU_llist_6_2 = TU_llist_6_1.copy();
+
+	if (TU_llist_6_1.count() != TU_llist_6_2.count())
+		throw TEST("TU_llist_6");
+	for (int i = 0; i < 10; i++)
+	{
+		if (TU_llist_6_1[i] != TU_llist_6_2[i])
+			throw TEST("TU_llist_6");
+	}
+
+	if (&TU_llist_6_1[0] == &TU_llist_6_2[0])
+		throw TEST("TU_llist_6");
 }

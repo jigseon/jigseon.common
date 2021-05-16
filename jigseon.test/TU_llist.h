@@ -15,6 +15,7 @@ class TU_llist
 	void TU_llist_3();
 	void TU_llist_4();
 	void TU_llist_5();
+	void TU_llist_6();
 public:
 	TU_llist();
 };
