@@ -6,7 +6,7 @@ TU_llist::TU_llist()
 	TU_llist_1();
 	TU_llist_2();
 	TU_llist_3();
-	//TU_llist_4();
+	TU_llist_4();
 	TU_llist_5();
 }
 
@@ -181,6 +181,7 @@ void TU_llist::TU_llist_4()
 	TU_llist_4.insert(102, -50);
 	TU_llist_4.insert(103, -1);
 
+
 	if (TU_llist_4[0] != 101 || TU_llist_4[51] != 102 || TU_llist_4[101] != 103)
 		throw TEST("TU_llist_4");
 
@@ -223,6 +224,4 @@ void TU_llist::TU_llist_5()
 		if (TU_llist_5.count() != initial_count_value + inserts - removes)
 			throw TEST("TU_llist_5");
 	}
-
-	//cout << TU_llist_5.count();
 }

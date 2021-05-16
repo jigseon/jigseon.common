@@ -285,13 +285,14 @@ namespace jigseon
 		}
 		else
 		{
-			for (uint32_t i = 0; i <= index - 1; ++i)
+			for (uint32_t i = 0; i < index - 1; ++i)
 			{
 				if (nullptr == temp->_next)
 				{
 					InsertTail(data);
 					return true;
 				}
+
 				temp = temp->_next;
 			}
 
