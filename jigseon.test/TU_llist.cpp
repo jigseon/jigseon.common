@@ -10,6 +10,7 @@ TU_llist::TU_llist()
 	TU_llist_5();
 	TU_llist_6();
 	TU_llist_7();
+	TU_llist_8();
 }
 
 void TU_llist::TU_llist_1()
@@ -268,4 +269,22 @@ void TU_llist::TU_llist_7()
 
 	if (sum != 25 + 100)
 		throw TEST("TU_llist_7");
+}
+
+void TU_llist::TU_llist_8()
+{
+	llist<int> TU_llist_8(5, 10);
+
+	if (TU_llist_8.count() != 10)
+		throw TEST("TU_llist_8");
+
+	TU_llist_8.clear();
+
+	if (TU_llist_8.count() != 0)
+		throw TEST("TU_llist_8");
+
+	TU_llist_8.append(10);
+	TU_llist_8.append(11);
+	if (TU_llist_8.count() != 2)
+		throw TEST("TU_llist_8");
 }
