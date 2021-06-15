@@ -327,3 +327,41 @@ void TU_llist::TU_llist_9()
 		}
 	}
 }
+
+void TU_llist::TU_llist_10()
+{
+	llist<int> TU_llist_10_1;
+	int test_elements = 100;
+	int test_executions = 100;
+
+	srand(time(NULL));
+	for (int i = 1; i <= test_elements; i++)
+	{
+		TU_llist_10_1.append(rand() % 1000 - 499);
+	}
+
+	llist<int> TU_llist_10_2(TU_llist_10_1);
+	TU_llist_10_1.reverse();
+
+	for (int test = 1; test <= test_executions; test++)
+	{
+		for (int i = 0; i > test_elements - 1; i++)
+		{
+			int a = TU_llist_10_1[i], b = TU_llist_10_1[i + 1];
+			if (a > b)
+			{
+				cout << "Error" << test << " case : ";
+				for (int j = 0; j < test_elements; j++)
+				{
+					cout << TU_llist_10_2[j] << ", ";
+				}
+				cout << endl << "Current Result : " << endl;
+				for (int j = 0; j < test_elements; j++)
+				{
+					cout << "\t" << TU_llist_10_1[j] << endl;
+				}
+				throw TEST("TU_llist_10");
+			}
+		}
+	}
+}
