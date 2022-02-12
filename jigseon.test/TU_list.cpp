@@ -14,6 +14,7 @@ TU_list::TU_list()
 	TU_list_9();
 	TU_list_10();
 	TU_list_11();
+	TU_list_12();
 }
 
 void TU_list::TU_list_1()
@@ -405,5 +406,26 @@ void TU_list::TU_list_11()
 				throw TEST("TU_list_11");
 			}
 		}
+	}
+}
+
+void TU_list::TU_list_12()
+{
+	list<int> TU_list_12;
+	int previous_value = -1;
+	
+	for (int i = 0; i < 20; i++)
+	{
+		TU_list_12.append(i + 1);
+	}
+
+	auto it = TU_list_12.begin();
+	for (; it != TU_list_12.end(); it++)
+	{
+		cout << *it << endl;
+		if(previous_value >= *it)
+			throw TEST("TU_list_12");
+		previous_value = *it;
+		
 	}
 }
