@@ -12,6 +12,8 @@ TU_llist::TU_llist()
 	TU_llist_7();
 	TU_llist_8();
 	TU_llist_9();
+	TU_llist_10();
+	TU_llist_11();
 }
 
 void TU_llist::TU_llist_1()
@@ -363,5 +365,25 @@ void TU_llist::TU_llist_10()
 				throw TEST("TU_llist_10");
 			}
 		}
+	}
+}
+
+void TU_llist::TU_llist_11() 
+{
+	llist<int> TU_llist_12;
+	int previous_value = -1;
+
+	for (int i = 0; i < 20; i++)
+	{
+		TU_llist_12.append(i + 1);
+	}
+
+	auto it = TU_llist_12.begin();
+	for (; it != TU_llist_12.end(); it++)
+	{
+		if (previous_value >= it->_data)
+			throw TEST("TU_list_12");
+		previous_value = it->_data;
+
 	}
 }

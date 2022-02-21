@@ -422,7 +422,6 @@ void TU_list::TU_list_12()
 	auto it = TU_list_12.begin();
 	for (; it != TU_list_12.end(); it++)
 	{
-		cout << *it << endl;
 		if(previous_value >= *it)
 			throw TEST("TU_list_12");
 		previous_value = *it;
