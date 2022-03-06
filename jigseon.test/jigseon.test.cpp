@@ -8,9 +8,8 @@
 
 #include "TU_list.h"
 #include "TU_llist.h"
+#include "TU_Heap.h"
 using namespace jigseon;
-
-
 
 
 int main()
@@ -19,14 +18,13 @@ int main()
 	{
 		TU_list();
 		TU_llist();
+		TU_Heap();
 	}
 	catch(TestException e)
 	{
 		e.print();
 		exit(1);
 	}
-
-	
 }
 
 void TU_llist()
