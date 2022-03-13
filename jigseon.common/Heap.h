@@ -1,12 +1,13 @@
 ﻿#pragma once
-
+#include "ExceptionClass.h"
 #include <iostream>
 #include <cstdlib>
+#include <string>
 
 namespace jigseon
 {
 	enum mode { minimum, maximum };
-	enum status { absent, present  };
+	enum status { absent, present };
 
 	template <class T>
 	struct HeapNode
@@ -30,12 +31,15 @@ namespace jigseon
 		HeapNode<T>* _heap;
 		size_t _count, _capacity;
 		int _mode;
+		void swap(HeapNode<T>*, HeapNode<T>*);
 
 	public:
 		Heap(size_t n = 100, int mode = minimum);
-		void swap(HeapNode<T>*, HeapNode<T>*);
 		bool enqueue(int key, T data);
 		HeapNode<T> dequeue();
+		size_t count() { return _count; }
+		size_t capacity() { return _capacity; }
+		string heap_mode() { return _mode ? string("maximum"): string("minimum"); }
 
 		class iterator
 		{
@@ -44,7 +48,6 @@ namespace jigseon
 		public:
 			enum directions { forward, backward };
 			iterator(HeapNode<T>* current, bool dir = forward) { _currentP = current; _direction = dir; }
-
 			void operator++() { _currentP = (_direction == forward) ? _currentP + 1 : _currentP - 1; }
 			void operator++(int none) { _currentP = (_direction == forward) ? _currentP + 1 : _currentP - 1; }
 			void operator--() { (_direction == forward) ? _currentP - 1 : _currentP + 1; }
