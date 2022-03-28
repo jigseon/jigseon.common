@@ -39,7 +39,7 @@ namespace jigseon
 		HeapNode<T> dequeue();
 		size_t count() { return _count; }
 		size_t capacity() { return _capacity; }
-		string heap_mode() { return _mode ? string("maximum"): string("minimum"); }
+		std::string heap_mode() { return _mode ? std::string("maximum"): std::string("minimum"); }
 
 		class iterator
 		{
